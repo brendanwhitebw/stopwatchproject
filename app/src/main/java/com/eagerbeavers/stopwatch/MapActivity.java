@@ -26,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -220,13 +221,14 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
     @Override
     public void onCameraChange(CameraPosition position) {
-
+        Map.clear();
         // Makes sure the visuals remain when zoom changes.
         for(int i = 0; i < Coordinates.size(); i++) {
             Map.addCircle(new CircleOptions().center(Coordinates.get(i))
                     .radius(RadiusList.get(i).intValue())
                     .fillColor(0x33ffa500)
                     .strokeColor(Color.TRANSPARENT).strokeWidth(2));
+            Map.addMarker(new MarkerOptions().position(Coordinates.get(i)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
     }
 
