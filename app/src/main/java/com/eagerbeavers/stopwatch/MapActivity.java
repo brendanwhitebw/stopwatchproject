@@ -2,6 +2,9 @@ package com.eagerbeavers.stopwatch;
 
 
 import android.Manifest;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener {
+public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener, AlarmFragment.FragmentCallBack {
 
     private final String TAG = "MAPS";
 
@@ -45,7 +48,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     GoogleApiClient aGoogleApiClient;
     Location lastLocation;
 
-    int RadDef = 50;
+    int RadDef = 100;
 
 
     /**
@@ -117,6 +120,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
             GeofenceListtore = new GeofenceStore(this, GeofenceList);
 
+
             // Storing current coords. Replace existing coords first.
 
             SharedPreferences.Editor editor = prefs.edit();
@@ -141,6 +145,12 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
             Coordinates.add(new LatLng(lat, lng));
             RadiusList.add(RadDef);
+        }
+
+        if (gotHereFrom.hasExtra("Alert")) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            AlarmFragment newAlarmFrag = new AlarmFragment();
+            newAlarmFrag.show(ft, "Alarm");
         }
     }
 
@@ -226,7 +236,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         for(int i = 0; i < Coordinates.size(); i++) {
             Map.addCircle(new CircleOptions().center(Coordinates.get(i))
                     .radius(RadiusList.get(i).intValue())
-                    .fillColor(0x33ffa500)
+                    .fillColor(0x88ffa500)
                     .strokeColor(Color.TRANSPARENT).strokeWidth(2));
             Map.addMarker(new MarkerOptions().position(Coordinates.get(i)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         }
@@ -248,5 +258,13 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    public void cancelPendingIntent() {
+        Toast.makeText(getApplicationContext(), "it's a start", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, GeofenceIntentService.class);
+        PendingIntent mPendingIntent = PendingIntent.getService(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mPendingIntent.cancel();
     }
 }
