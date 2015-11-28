@@ -37,54 +37,82 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+/** This activity holds and updates the map, while also setting up the geofences, and displaying the
+ * alarm as a fragment. Most of the specific code for setting up geofences is found in the geofenceStore
+ * class. Including the intentService which eventually redirects here upon entry to the geofence area.
+ *
+ * This activity is designed to react differently depending on the extras attached to the intents
+ * directing the user here.
+ */
+
 public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener, AlarmFragment.FragmentCallBack {
 
-    private final String TAG = "MAPS";
+    // The tag for all of our Log outputs.
+
+    private final String TAG = "stopwatch.MapActivity";
+
+    // We use a google map in this activity, simply called map.
 
     private GoogleMap Map;
 
-    // Current location stuff.
+    /* In order to have the camera start at our current location we need to access the google
+    API client, and use the fused location api to return the last location that received information
+    from our device. */
 
     GoogleApiClient aGoogleApiClient;
     Location lastLocation;
 
+    /* This is the default radius of the geofences, it will later be decided by user input, but for
+     testing purposes is currently set to 100 m. */
+
     int RadDef = 100;
 
+    /* Shared Preferences, which we use here to store certain states of the activity, like whether
+    the alarm is on, and where the current geofence is. */
+
+    SharedPreferences prefs;
 
     /**
-     * Geofence Data
+     * Geofence Data, all of the variables here are used to set up our geofence/s.
      */
 
     /**
-     * Geofences Array
+     * Geofences Array, is an arrayList of geofences, so that we can later expand the app to hold
+     * more than one geofence at a time (the API allows up to 100).
      */
     ArrayList<Geofence> GeofenceList;
 
     /**
-     * Geofence Coordinates
+     * Geofence Coordinates, this list of coordiantes is used to set up the geofences, and draw the
+     * markers and Circles on the map. It's values are stored in shared preferences to they appear
+     * on the map as long as the geofence is active.
      */
+
     ArrayList<LatLng> Coordinates;
 
     /**
-     * Geofence Radius'
+     * Geofence Radius', used in conjunction with the Coordinates list.
      */
+
     ArrayList<Integer> RadiusList;
 
     /**
      * Geofence Store, custom class, which sets pending intents and activates the geofences using the
      * API client.
      */
+
     private GeofenceStore GeofenceListtore;
 
-    /* Shared Prefs! */
 
-    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        Log.v(TAG, "created");
+        Log.v(TAG, "onCreate");
+
+        /* Initialisation of the arrays needed for the geofence, and a call to the default shared
+         preferences. */
 
         GeofenceList = new ArrayList<Geofence>();
         Coordinates = new ArrayList<LatLng>();
@@ -92,36 +120,60 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        /* Determining which activity sent the user here, and what extra information it sent is a
+        core part of this activity, so we always get the intent that started this activity. */
+
         Intent gotHereFrom = this.getIntent();
+
+        /* This variable will allow us iterate through the various array lists, but for now is more
+        or less a dummy variable which remains as 0.
+         */
 
         int i = 0;
 
+        /* If the intent that sent the user here has an id tag, it is sending coordinates for a new
+        geofence. */
+
         if (gotHereFrom.hasExtra("id")) {
+
+            /* Along with the id, a lattitude and longtitude will be attached. This is where we will
+            set up our geofence after we add the values to our coordinate list.*/
 
             double lat = gotHereFrom.getDoubleExtra("lat", 0);
             double lng = gotHereFrom.getDoubleExtra("lng", 0);
 
             Coordinates.add(new LatLng(lat, lng));
 
-            // Adding associated geofence radius' to array.
+            // We also add the associated geofence radius' to array.
             RadiusList.add(RadDef);
+
+            /* Now we add the geofence object based on these values to it's own list.
+            *
+            * We set the id to match the id extra that we received from the intent, coordinates and
+            * radius to the values used above. Currently the geofence is set to never expire on it's
+            * own, which is useful for including a DWELL type transition, for testing, but can be
+            * removed from the final version. The loitering delay, in milliseconds is how long you
+            * spend within the geofence before the dwell transition triggers.
+            * */
 
             GeofenceList.add(new Geofence.Builder()
                     .setRequestId(gotHereFrom.getStringExtra("id"))
-                            // The coordinates of the center of the geofence and the radius in meters.
                     .setCircularRegion(Coordinates.get(i).latitude, Coordinates.get(i).longitude, RadiusList.get(i).intValue())
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                            // Required when we use the transition type of GEOFENCE_TRANSITION_DWELL
                     .setLoiteringDelay(30000)
-                    .setTransitionTypes(
-                            Geofence.GEOFENCE_TRANSITION_ENTER
-                                    | Geofence.GEOFENCE_TRANSITION_DWELL
-                                    | Geofence.GEOFENCE_TRANSITION_EXIT).build());
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT)
+                    .build());
+
+            /* Now that we've built our geofence object, we call the GeofenceStore object and pass
+            in our list of geofences and the context of this activity. That context is used to set
+            up the pending intent that handles our alarm and notifications, and eventually to cancel
+            that pending intent. */
 
             GeofenceListtore = new GeofenceStore(this, GeofenceList);
 
-
-            // Storing current coords. Replace existing coords first.
+            /* In order to display the marker and radius of the geofence on the map at all times
+            once the geofence is active, we need to store the coordinates and radius in shared
+            preferences, first deleting any existing values. */
 
             SharedPreferences.Editor editor = prefs.edit();
 
@@ -139,13 +191,23 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
             editor.putString("Lng", "" + lng);
             editor.apply();
 
-        } else {
+        } else { // In other words, if the intent did not include new coordinates.
+
+            /* We fetch the saved coordinates, and put them in the coordinates and radius list.
+            The geofence itself doesn't need to be remade, it's running away in the background
+            itself, but the map needs this values for the visual elements like markers and circles
+            that would dissappear between instances of this map activity.
+             */
             double lat = Double.parseDouble(prefs.getString("Lat", "0"));
             double lng = Double.parseDouble(prefs.getString("Lng", "0"));
 
             Coordinates.add(new LatLng(lat, lng));
             RadiusList.add(RadDef);
         }
+
+        /* If we are sent to this activity as a result of the pendingintent activating the geofence
+         * intent service, the intent will have an Alert extra. This will cause the alarm dialog
+          * fragment to show.*/
 
         if (gotHereFrom.hasExtra("Alert")) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -157,30 +219,38 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     @Override
     protected void onStart() {
         super.onStart();
-        Log.v(TAG, "started");
+        Log.v(TAG, "onStart");
     }
 
     @Override
     protected void onStop() {
+        super.onStop();
+        Log.v(TAG, "onStart");
+
+        /* We need to disconnect the API clients to stop confusion for future calls. This if there
+        was a new geofence attached we disconnect it's API, and we always dissconnect the API which
+        finds our initial position.
+         */
+
         if (GeofenceListtore!= null) {
             GeofenceListtore.disconnect();
         }
-        super.onStop();
 
         aGoogleApiClient.disconnect();
-
-        Log.v(TAG, "stopped");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.v(TAG, "onResume");
 
-        Log.v(TAG, "resumed");
+        /* When we resume this activity, we if Google play services are available, and if they are
+        we set up the map if there isn't one already running. */
 
         if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS) {
             setUpMapIfNeeded();
         } else {
+            Log.e(TAG, "GooglePlayServices not available.");
             GooglePlayServicesUtil.getErrorDialog(
                     GooglePlayServicesUtil.isGooglePlayServicesAvailable(this),
                     this, 0);
@@ -188,10 +258,11 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     }
 
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the
-        // map.
+        /* We first check if there is alread and instance of the map */
+        Log.v(TAG, "Checking map setup.");
         if (Map == null) {
-            // Try to obtain the map from the SupportMapFragment.
+
+            // If there isn't we try to obtain the map from the SupportMapFragment.
             Map = ((SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map)).getMap();
 
@@ -202,15 +273,14 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the
-     * camera. In this case, we just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #Map}
-     * is not null.
-     */
     private void setUpMap() {
-        /* Extra code to set current location */
+        Log.v(TAG, "Setting up map.");
+
+        /* We connect to the Api client, and request the location services API. If this is built
+        correctly we connect to the API client, and the result of that connection, and the camera
+        sweep to the current location is handled there. If that doesn't happen the default position
+        of the camera is set to Westmoreland St. Dublin.
+         */
 
         aGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
@@ -218,53 +288,92 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         if (aGoogleApiClient != null) {
             aGoogleApiClient.connect();
         } else {
-            Toast.makeText(getApplicationContext(), "not connected api client", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You are NOT connected to the Api client.", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Google Api Client build failed.");
         }
 
-        // Hide labels.
+        //53.346612, -6.259147
+
+        /* The Hybrid map has: Satellite photograph data with road maps added. Road and feature
+        labels are also visible. */
         Map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        /* Indoor enabling is off so that zooming doesn't trigger transitions to floor plans or
+        extra complications un-needed in this map. */
         Map.setIndoorEnabled(false);
+
+        /* This adds the compass button that allows the user to always center the map on their
+        current position. We will later add a button that moves to map to their intended stop.
+         */
         Map.setMyLocationEnabled(true);
 
+        // Camera starts over Dublin, but should quickly move to user's location.
+        Map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(53.346612, -6.259147), 15));
+
+        /* The map is responsive to changes in camera orientation, position, etc. This is
+        implemented in onCameraChange. */
         Map.setOnCameraChangeListener(this);
     }
 
-    @Override
-    public void onCameraChange(CameraPosition position) {
-        Map.clear();
-        // Makes sure the visuals remain when zoom changes.
-        for(int i = 0; i < Coordinates.size(); i++) {
-            Map.addCircle(new CircleOptions().center(Coordinates.get(i))
-                    .radius(RadiusList.get(i).intValue())
-                    .fillColor(0x88ffa500)
-                    .strokeColor(Color.TRANSPARENT).strokeWidth(2));
-            Map.addMarker(new MarkerOptions().position(Coordinates.get(i)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        }
-    }
+    /* API Client set-up methods. Used for the two GoogleApi implementations. */
 
     @Override
     public void onConnected(Bundle bundle) {
-        // Setting camera to current position.
-        lastLocation = LocationServices.FusedLocationApi.getLastLocation(aGoogleApiClient);
+        Log.v(TAG, "Google Api Client connected, accessing location data.");
 
+        /* We used the FusedLocationAPI to find the user's location, then move the map's camera
+        there. */
+
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(aGoogleApiClient);
         Map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 15));
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Log.v(TAG, "Google Api Client connection suspended.");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
+        Log.e(TAG, "Google Api Client connection failed.");
     }
 
+    @Override
+    public void onCameraChange(CameraPosition position) {
+
+        /* We clear old Circles and markers that remain after camera changes, then redraw them,
+        to avoid unpredictable dissappearances of these UI features. */
+
+        Map.clear();
+
+        for(int i = 0; i < Coordinates.size(); i++) {
+            Map.addCircle(new CircleOptions().center(Coordinates.get(i))
+                    .radius(RadiusList.get(i).intValue())
+                    .fillColor(0x88ffa500) // Orange.
+                    .strokeColor(Color.TRANSPARENT).strokeWidth(2));
+            Map.addMarker(new MarkerOptions().position(Coordinates.get(i))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        }
+    }
+
+    /* This method is called in the alarm fragment, it recreates and overrides the pending intent
+    that triggers the alarm then deletes it so that no more transition events will trigger the alarm.
+    It also removes the saved values from the coordinates in shared preferences.
+     */
+
     public void cancelPendingIntent() {
-        Toast.makeText(getApplicationContext(), "it's a start", Toast.LENGTH_LONG).show();
+        Log.v(TAG, "Cancelling pending intent, and clearing shared preferences.");
         Intent intent = new Intent(this, GeofenceIntentService.class);
         PendingIntent mPendingIntent = PendingIntent.getService(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mPendingIntent.cancel();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("savedCoords");
+        editor.remove("ID");
+        editor.remove("Lat");
+        editor.remove("Lng");
+        editor.apply();
     }
 }
