@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -40,7 +42,7 @@ public class GeofenceStore implements ConnectionCallbacks,
     /**
      * Geofencing PendingIntent
      */
-    private PendingIntent mPendingIntent;
+    public PendingIntent mPendingIntent;
 
     /**
      * List of geofences to monitor.
