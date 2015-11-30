@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/location_choice"
-    tools:context="com.eagerbeavers.stopwatch.LocationChoice">
+
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Custom route"
+        android:id="@+id/CustomRoute"
+        android:background="@drawable/button_pattern"
+        android:onClick="Custom"
+        android:layout_marginTop="10dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,15 +25,18 @@
             android:layout_height="wrap_content"
             android:text="Route"
             android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="5" />
+            android:layout_weight="5"
+            android:layout_marginTop="15dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Stop"
             android:id="@+id/textView"
-            android:layout_weight="5" />
+            android:layout_weight="5"
+            android:layout_marginTop="15dp"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,4 +60,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

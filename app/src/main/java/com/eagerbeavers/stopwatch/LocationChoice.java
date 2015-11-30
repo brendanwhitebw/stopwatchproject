@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ public class LocationChoice extends AppCompatActivity  {
     ListView StopListView, RouteListView;
     ArrayList StopArray = new ArrayList();
     ArrayList RouteArray = new ArrayList();
+    Button CustomRoute;
 
     // Initialising here so that it can be passed between button click calls.
     String item;
@@ -60,12 +62,14 @@ public class LocationChoice extends AppCompatActivity  {
 
         StopListView = (ListView) findViewById(R.id.StopListView);
         RouteListView = (ListView) findViewById(R.id.RouteListView);
+        CustomRoute = (Button) findViewById(R.id.CustomRoute);
 
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
 
         for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
             RouteArray.add(routeL[i]);
         }
+
 
         ArrayAdapter<String>  routeAdapter = new ArrayAdapter<String>(this, R.layout.customlocationlistview, android.R.id.text1,RouteArray);
         RouteListView.setAdapter(routeAdapter); // populate route list
@@ -106,6 +110,12 @@ public class LocationChoice extends AppCompatActivity  {
 
             }
         });
+    }
+
+    public void Custom(View view) // button listener
+    {
+        Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
+        startActivity(CustomIntent);
     }
 
     public void Insert(String route, String stop, double lat, double lng){
@@ -160,6 +170,15 @@ public class LocationChoice extends AppCompatActivity  {
         stop = "Naas, East";
         lat = 53.214048;
         lng = -6.663412;
+
+        Insert(route, stop, lat, lng);
+
+        route = "Kildare";
+        stop = "Newbridge, Maxol";
+        lat = 53.167480;
+        lng = -6.816529;
+
+
 
         Insert(route, stop, lat, lng);
 

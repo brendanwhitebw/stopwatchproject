@@ -59,22 +59,26 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map"
-            >
+            android:label="@string/title_activity_map" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
-
-
         </activity>
 
         <service
             android:name=".GeofenceIntentService"
             android:exported="false" >
         </service>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="896a41c1c4d47780ecb869a4e9c725a4d693b6b2" />
+
+        <activity
+            android:name=".CustomInput"
+            android:label="@string/title_activity_custom_input"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
