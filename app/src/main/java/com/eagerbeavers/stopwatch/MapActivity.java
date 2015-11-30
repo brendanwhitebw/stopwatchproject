@@ -1,18 +1,16 @@
 package com.eagerbeavers.stopwatch;
 
-
-import android.Manifest;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -27,14 +25,15 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /** This activity holds and updates the map, while also setting up the geofences, and displaying the
@@ -45,7 +44,9 @@ import java.util.ArrayList;
  * directing the user here.
  */
 
-public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener, AlarmFragment.FragmentCallBack {
+public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener,
+        AlarmFragment.FragmentCallBack, GoogleMap.OnMarkerClickListener {
 
     // The tag for all of our Log outputs.
 
@@ -97,11 +98,23 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     ArrayList<Integer> RadiusList;
 
     /**
+     * Geofence place names, used in conjunction with the Coordinates list.
+     */
+
+    ArrayList<String> StopNames;
+
+    /**
      * Geofence Store, custom class, which sets pending intents and activates the geofences using the
      * API client.
      */
 
     private GeofenceStore GeofenceListtore;
+
+    /* Alarm stuff. */
+
+    private MediaPlayer player;
+
+    AlarmFragment newAlarmFrag;
 
 
 
@@ -117,6 +130,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         GeofenceList = new ArrayList<Geofence>();
         Coordinates = new ArrayList<LatLng>();
         RadiusList = new ArrayList<Integer>();
+        StopNames = new ArrayList<String>();
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -139,6 +153,8 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
             /* Along with the id, a lattitude and longtitude will be attached. This is where we will
             set up our geofence after we add the values to our coordinate list.*/
 
+            StopNames.add(gotHereFrom.getStringExtra("id"));
+
             double lat = gotHereFrom.getDoubleExtra("lat", 0);
             double lng = gotHereFrom.getDoubleExtra("lng", 0);
 
@@ -157,7 +173,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
             * */
 
             GeofenceList.add(new Geofence.Builder()
-                    .setRequestId(gotHereFrom.getStringExtra("id"))
+                    .setRequestId(StopNames.get(i))
                     .setCircularRegion(Coordinates.get(i).latitude, Coordinates.get(i).longitude, RadiusList.get(i).intValue())
                     .setExpirationDuration(Geofence.NEVER_EXPIRE)
                     .setLoiteringDelay(30000)
@@ -203,6 +219,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
             Coordinates.add(new LatLng(lat, lng));
             RadiusList.add(RadDef);
+            StopNames.add(prefs.getString("ID", "Place!"));
         }
 
         /* If we are sent to this activity as a result of the pendingintent activating the geofence
@@ -210,15 +227,33 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
           * fragment to show.*/
 
         if (gotHereFrom.hasExtra("Alert")) {
+            SharedPreferences.Editor editor = prefs.edit();
+            if (!(prefs.getBoolean("AlarmOn", false))) {
+                editor.putBoolean("AlarmOn", true);
+                editor.apply();
+            }
+
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            AlarmFragment newAlarmFrag = new AlarmFragment();
+            newAlarmFrag = new AlarmFragment();
+            newAlarmFrag.show(ft, "Alarm");
+        } else if (prefs.getBoolean("AlarmOn", false)) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            newAlarmFrag = new AlarmFragment();
             newAlarmFrag.show(ft, "Alarm");
         }
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.v(TAG, "onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         Log.v(TAG, "onStart");
     }
 
@@ -307,12 +342,19 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
          */
         Map.setMyLocationEnabled(true);
 
+        /* This adds the + and - buttons for zooming. */
+
+        Map.getUiSettings().setZoomControlsEnabled(true);
+
         // Camera starts over Dublin, but should quickly move to user's location.
         Map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(53.346612, -6.259147), 15));
 
         /* The map is responsive to changes in camera orientation, position, etc. This is
         implemented in onCameraChange. */
         Map.setOnCameraChangeListener(this);
+
+        /*Allow marker clicks to be heard. */
+        Map.setOnMarkerClickListener(this);
     }
 
     /* API Client set-up methods. Used for the two GoogleApi implementations. */
@@ -345,16 +387,26 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         to avoid unpredictable dissappearances of these UI features. */
 
         Map.clear();
-
-        for(int i = 0; i < Coordinates.size(); i++) {
-            Map.addCircle(new CircleOptions().center(Coordinates.get(i))
-                    .radius(RadiusList.get(i).intValue())
-                    .fillColor(0x88ffa500) // Orange.
-                    .strokeColor(Color.TRANSPARENT).strokeWidth(2));
-            Map.addMarker(new MarkerOptions().position(Coordinates.get(i))
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        if (Coordinates != null) {
+            for (int i = 0; i < Coordinates.size(); i++) {
+                Map.addCircle(new CircleOptions().center(Coordinates.get(i))
+                        .radius(RadiusList.get(i).intValue())
+                        .fillColor(0x88ffa500) // Orange.
+                        .strokeColor(Color.TRANSPARENT).strokeWidth(2));
+                Map.addMarker(new MarkerOptions().position(Coordinates.get(i))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                        .title(StopNames.get(i)));
+            }
         }
     }
+
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(MapActivity.this, "This is " + marker.getTitle() + " isn't that cool!?", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
 
     /* This method is called in the alarm fragment, it recreates and overrides the pending intent
     that triggers the alarm then deletes it so that no more transition events will trigger the alarm.
@@ -368,6 +420,12 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mPendingIntent.cancel();
 
+        // We remove values from the coordinates list and markers immediately so the map updates nicely.
+
+        Coordinates = null;
+        RadiusList = null;
+        Map.clear();
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("savedCoords");
@@ -375,5 +433,72 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         editor.remove("Lat");
         editor.remove("Lng");
         editor.apply();
+    }
+
+    /* ALARM STUFF */
+
+    /* This method tells the MediaPlayer where to get it's file from, then sets up an AudioManager
+     * which allows control of volume and ring services.
+     * It then checks that alarm volume isn't zero, before player the Uri alert in the alarm stream.*/
+
+    public void play() {
+        //Instantiate player.
+
+        Context context = this;
+
+        Uri alert = getAlarmSound();
+
+        player = new MediaPlayer();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        try {
+            player.setDataSource(context, alert);
+            final AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            if (audio.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                player.setAudioStreamType(AudioManager.STREAM_ALARM);
+                player.setLooping(true);
+
+                player.prepare();
+                player.start();
+            }
+        } catch (IOException e) {
+            Log.e("Error....", "Check code...");
+        }
+
+    }
+
+    /* This method finds the alarm sound set on the system, and returns a Uri link to that alarm
+    sound. */
+
+    private Uri getAlarmSound() {
+
+        //RingtoneManager fetchs the default ringtone for the system.
+        Uri alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
+        // If there isn't a default alarm resource...
+        if (alertSound == null) {
+            // Use the notification sound.
+            alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            // If there also isn't a notification sound...
+            if (alertSound == null) {
+                // Use the ringtone.
+                alertSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
+        }
+        return alertSound;
+    }
+
+    public void stopAlarm() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        if (prefs.getBoolean("AlarmOn", false)) {
+            editor.remove("AlarmOn");
+            editor.apply();
+        }
+
+        player.stop();
     }
 }

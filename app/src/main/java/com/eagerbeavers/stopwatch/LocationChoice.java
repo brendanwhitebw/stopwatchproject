@@ -166,6 +166,12 @@ public class LocationChoice extends AppCompatActivity  {
 
         Insert(route, stop, lat, lng);
 
+        stop = "Callan";
+        lat = 53.382900;
+        lng = -6.602038;
+
+        Insert(route, stop, lat, lng);
+
         route = "Kildare";
         stop = "Naas, East";
         lat = 53.214048;
