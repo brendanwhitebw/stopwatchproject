@@ -5,8 +5,8 @@
     tools:context="com.eagerbeavers.stopwatch.AlarmFragment">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:id="@+id/StopAlarmBtn"
         android:text="OKAY! Stop it!"
         android:layout_gravity="center"/>

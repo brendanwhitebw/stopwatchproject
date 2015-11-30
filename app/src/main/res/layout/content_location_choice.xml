@@ -12,7 +12,7 @@
         android:id="@+id/CustomRoute"
         android:background="@drawable/button_pattern"
         android:onClick="Custom"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="64dp" />
 
     <LinearLayout
         android:orientation="horizontal"

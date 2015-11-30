@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eagerbeavers.stopwatch" >
+    package="com.eagerbeavers.stopwatch">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -22,11 +22,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".HomeScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +37,7 @@
             android:name=".LocationChoice"
             android:label="@string/title_activity_location_choice"
             android:parentActivityName=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
@@ -59,7 +59,9 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map"
+            >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
@@ -67,8 +69,7 @@
 
         <service
             android:name=".GeofenceIntentService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -77,8 +78,8 @@
         <activity
             android:name=".CustomInput"
             android:label="@string/title_activity_custom_input"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

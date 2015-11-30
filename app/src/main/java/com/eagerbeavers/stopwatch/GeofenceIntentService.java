@@ -102,8 +102,8 @@ public class GeofenceIntentService extends IntentService {
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setDefaults(Notification.DEFAULT_ALL)
-                //.setContentIntent(notificationPendingIntent) // EXTRA EXTRA!!!
-                .setAutoCancel(false);
+                //.setContentIntent(notificationPendingIntent) // Code to have the notification send the user to the map on click. Now deemed unneccesary.
+                .setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
