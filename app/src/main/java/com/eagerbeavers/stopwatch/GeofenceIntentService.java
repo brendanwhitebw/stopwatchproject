@@ -109,8 +109,13 @@ public class GeofenceIntentService extends IntentService {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0, notificationBuilder.build());
-
         wakeLock.release();
+
+        Intent mapIntent = new Intent(getBaseContext(), MapActivity.class);
+        mapIntent.putExtra("Alert", true);
+        mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        getApplication().startActivity(mapIntent);
     }
 
     private String getTriggeringGeofences(Intent intent) {
