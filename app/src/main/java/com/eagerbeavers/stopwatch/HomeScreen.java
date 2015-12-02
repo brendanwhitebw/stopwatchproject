@@ -28,33 +28,6 @@ public class HomeScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        /* Crude mock up of HomeScreen options. */
-
-        String[] options = new String[]{"Map", "Set Alarm", "Settings"};
-        ListView listView = (ListView) findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, options);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent MapIntent = new Intent(getApplicationContext(), MapActivity.class);
-                        startActivity(MapIntent);
-                        break;
-                    case 1:
-                        // Choosing set alarm takes you to the screen for choosing a location for the geofence.
-
-                        Intent choosePlaceIntent = new Intent(getApplicationContext(), LocationChoice.class);
-                        startActivity(choosePlaceIntent);
-                        break;
-                    case 2:
-                        Intent SettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                        startActivity(SettingsIntent);
-                        break;
-                }
-            }
-        });
     }
 
     @Override
@@ -72,11 +45,30 @@ public class HomeScreen extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.toolbar_settings) {
-            Intent SettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(SettingsIntent);
+        if (id == R.id.action_settings) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Go to Map activity method
+    public void gotToMap(View view)
+    {
+        Intent intentMap = new Intent(HomeScreen.this, MapActivity.class);
+        startActivity(intentMap);
+    }
+
+    //Go to Alarms activity method
+    public void goToAlarms(View view)
+    {
+        Intent intentAlarms = new Intent(HomeScreen.this, LocationChoice.class);
+        startActivity(intentAlarms);
+    }
+
+    // Go to Settings Page
+    public void goToSettings (View view) {
+        Intent SettingsIntent = new Intent(getApplication(), SettingsActivity.class);
+        startActivity(SettingsIntent);
     }
 }
