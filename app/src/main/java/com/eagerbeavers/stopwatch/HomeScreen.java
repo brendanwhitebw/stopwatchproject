@@ -65,4 +65,11 @@ public class HomeScreen extends AppCompatActivity {
         Intent intentAlarms = new Intent(HomeScreen.this, LocationChoice.class);
         startActivity(intentAlarms);
     }
+
+    //Go to Settings activity method
+    public void goToSettings(View view)
+    {
+        Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
+        startActivity(intentSettings);
+    }
 }
