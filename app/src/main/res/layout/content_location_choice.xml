@@ -5,6 +5,12 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <LinearLayout
+        android:layout_height="450dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -59,5 +65,38 @@
             android:layout_weight="5" />
 
     </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Bottom Bar -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center|bottom"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="64dp"
+        android:background="@color/background"
+        >
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:onClick="gotToMap"
+            android:text="@string/stringMap"
+            />
+
+        <Button
+            android:id="@+id/buttonAlarms"
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:onClick="goToAlarms"
+            android:text="@string/stringAlarms"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>
