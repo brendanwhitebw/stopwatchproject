@@ -40,20 +40,10 @@
             android:id="@+id/buttonAlarms"
             android:layout_width="80dp"
             android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
             android:onClick="goToAlarms"
             android:text="@string/stringAlarms"
             />
-
-        <Button
-            android:id="@+id/buttonSettings"
-            android:layout_width="80dp"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:onClick="goToSettings"
-            android:text="@string/stringSettings"
-            />
-
 
     </RelativeLayout>
 
