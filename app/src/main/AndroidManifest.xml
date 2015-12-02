@@ -1,48 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eagerbeavers.stopwatch">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.eagerbeavers.stopwatch">
 
-    <!--
+<!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="package.name.permission.MAPS_RECEIVE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="package.name.permission.MAPS_RECEIVE" />
+<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".HomeScreen"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
+    android:supportsRtl="true" android:theme="@style/AppTheme">
+    <activity android:name=".HomeScreen" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".LocationChoice"
-            android:label="@string/title_activity_location_choice"
-            android:parentActivityName=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="HomeScreen" />
-        </activity>
-        <!--
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity android:name=".LocationChoice" android:label="@string/title_activity_location_choice"
+        android:parentActivityName=".HomeScreen" android:theme="@style/AppTheme.NoActionBar">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="HomeScreen" />
+    </activity>
+    <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
@@ -50,36 +37,26 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapActivity"
-            android:label="@string/title_activity_map"
-            >
+    <activity android:name=".MapActivity" android:label="@string/title_activity_map">
+        <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="HomeScreen" />
+    </activity>
 
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="HomeScreen" />
+    <service android:name=".GeofenceIntentService" android:exported="false" />
+
+    <meta-data android:name="io.fabric.ApiKey" android:value="896a41c1c4d47780ecb869a4e9c725a4d693b6b2" />
+
+    <activity android:name=".CustomInput" android:label="@string/title_activity_custom_input"
+        android:theme="@style/AppTheme.NoActionBar" />
+
+    <application>
+        <activity android:name="com.eagerbeavers.stopwatch.SettingsActivity" android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme" android:parentActivityName="HomeScreen">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="HomeScreen" />
         </activity>
-
-        <service
-            android:name=".GeofenceIntentService"
-            android:exported="false"></service>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="896a41c1c4d47780ecb869a4e9c725a4d693b6b2" />
-
-        <activity
-            android:name=".CustomInput"
-            android:label="@string/title_activity_custom_input"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
+</application>
 
 </manifest>

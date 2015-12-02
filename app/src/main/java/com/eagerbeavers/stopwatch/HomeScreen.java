@@ -27,20 +27,10 @@ public class HomeScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /* As of yet unused FAB. */
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         /* Crude mock up of HomeScreen options. */
 
-        String[] options = new String[]{"Map", "Set Alarm"};
+        String[] options = new String[]{"Map", "Set Alarm", "Settings"};
         ListView listView = (ListView) findViewById(R.id.listView);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, options);
         listView.setAdapter(adapter);
@@ -57,6 +47,10 @@ public class HomeScreen extends AppCompatActivity {
 
                         Intent choosePlaceIntent = new Intent(getApplicationContext(), LocationChoice.class);
                         startActivity(choosePlaceIntent);
+                        break;
+                    case 2:
+                        Intent SettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                        startActivity(SettingsIntent);
                         break;
                 }
             }
@@ -78,8 +72,9 @@ public class HomeScreen extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.toolbar_settings) {
+            Intent SettingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(SettingsIntent);
         }
 
         return super.onOptionsItemSelected(item);
