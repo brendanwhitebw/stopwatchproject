@@ -67,7 +67,7 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
     /* This is the default radius of the geofences, it will later be decided by user input, but for
      testing purposes is currently set to 100 m. */
 
-    int RadDef = 100;
+    int RadDef;
 
     /* Shared Preferences, which we use here to store certain states of the activity, like whether
     the alarm is on, and where the current geofence is. */
@@ -134,6 +134,8 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         StopNames = new ArrayList<String>();
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        RadDef = prefs.getInt("Radius", 200); //Default should be set to 4000 in future.
 
         /* Determining which activity sent the user here, and what extra information it sent is a
         core part of this activity, so we always get the intent that started this activity. */
