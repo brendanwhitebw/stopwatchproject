@@ -229,4 +229,18 @@ public class LocationChoice extends AppCompatActivity  {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //Go to Map activity method
+    public void gotToMap(View view)
+    {
+        Intent intentMap = new Intent(LocationChoice.this, MapActivity.class);
+        startActivity(intentMap);
+    }
+
+    //Go to Alarms activity method
+    public void goToAlarms(View view)
+    {
+        Intent intentAlarms = new Intent(LocationChoice.this, LocationChoice.class);
+        startActivity(intentAlarms);
+    }
 }

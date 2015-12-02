@@ -1,5 +1,6 @@
 package com.eagerbeavers.stopwatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +18,20 @@ public class CustomInput extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
 
+    }
+
+    //Go to Map activity method
+    public void gotToMap(View view)
+    {
+        Intent intentMap = new Intent(CustomInput.this, MapActivity.class);
+        startActivity(intentMap);
+    }
+
+    //Go to Alarms activity method
+    public void goToAlarms(View view)
+    {
+        Intent intentAlarms = new Intent(CustomInput.this, LocationChoice.class);
+        startActivity(intentAlarms);
     }
 
 }
