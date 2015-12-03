@@ -26,33 +26,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
             android:text="Alarm Radius (km)"
-            android:id="@+id/setAlarmRadiusTV" />
+            android:id="@+id/setAlarmRadiusTV"
+            android:layout_weight="1"/>
 
         <NumberPicker
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:id="@+id/radNumberPicker"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             />
 
         <Button
-            android:layout_width="55dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SET"
             android:id="@+id/setAlarmRadiusButton"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
              />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:text="DEFAULT"
             android:id="@+id/setAlarmRadiusDefBtn"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             />
     </LinearLayout>
 
