@@ -4,6 +4,7 @@
     <string name="title_activity_location_choice">LocationChoice</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_custom_input">Map</string>
+    <string name="title_activity_settings">Settings</string>
 
 
     <!-- Allan's UI strings -->
