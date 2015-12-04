@@ -33,7 +33,7 @@
         android:weightSum="10">
 
         <EditText
-            android:layout_width="match_paren0dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/StopText"
             android:layout_gravity="center_horizontal"
