@@ -47,7 +47,7 @@
 
         <Button
             android:id="@+id/buttonSettings"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:onClick="goToSettings"
