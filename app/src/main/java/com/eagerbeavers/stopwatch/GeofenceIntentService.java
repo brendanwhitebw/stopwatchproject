@@ -48,19 +48,19 @@ public class GeofenceIntentService extends IntentService {
 
             switch(transition) {
                 case Geofence.GEOFENCE_TRANSITION_ENTER:
-                    notificationTitle = "Geofence Entered";
-                    Log.v(TAG, "Geofence Entered");
+                    notificationTitle = "You've arrived at your destination!";
+                    Log.v(TAG, notificationTitle);
                     break;
                 case Geofence.GEOFENCE_TRANSITION_DWELL:
-                    notificationTitle = "Geofence Dwell";
-                    Log.v(TAG, "Dwelling in Geofence");
+                    notificationTitle = "You're close!";
+                    Log.v(TAG, notificationTitle);
                     break;
                 case Geofence.GEOFENCE_TRANSITION_EXIT:
-                    notificationTitle = "Geofence Exit";
-                    Log.v(TAG, "Geofence Exited");
+                    notificationTitle = "You may have missed your stop...";
+                    Log.v(TAG, notificationTitle);
                     break;
                 default:
-                    notificationTitle = "Geofence Unknown";
+                    notificationTitle = "Strange intent just triggered the alarm...";
             }
 
             sendNotification(this, getTriggeringGeofences(intent), notificationTitle);
@@ -98,7 +98,7 @@ public class GeofenceIntentService extends IntentService {
         /* END EXTRA */
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(R.mipmap.ic_launcher)
+                context).setSmallIcon(R.mipmap.ic_beaver_button_1)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setDefaults(Notification.DEFAULT_ALL)

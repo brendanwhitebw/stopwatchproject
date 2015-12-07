@@ -14,6 +14,12 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         Thread timer = new Thread() {
             public void run() {
                 try {
