@@ -80,6 +80,13 @@ public class AlarmFragment extends DialogFragment {
             Toast.makeText(getActivity(), "You haven't stopped the Alarm correctly!!!", Toast.LENGTH_SHORT).show();
             callback.stopAlarm();
         }
-        wakeLock.release();
+
+        if (wakeLock != null) {
+            try {
+                wakeLock.release();
+            } catch (Exception e) {
+                Log.e(TAG, "Wakelock under locked, couldn't release.");
+            }
+        }
     }
 }

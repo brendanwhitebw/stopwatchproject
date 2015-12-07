@@ -67,7 +67,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     //Go to Settings activity method
-    public void goToSettings(View view)
+    public void goToSettings (View view)
     {
         Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
         startActivity(intentSettings);

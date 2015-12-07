@@ -14,11 +14,16 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -37,6 +42,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import io.fabric.sdk.android.Fabric;
+
 /** This activity holds and updates the map, while also setting up the geofences, and displaying the
  * alarm as a fragment. Most of the specific code for setting up geofences is found in the geofenceStore
  * class. Including the intentService which eventually redirects here upon entry to the geofence area.
@@ -45,7 +52,7 @@ import java.util.ArrayList;
  * directing the user here.
  */
 
-public class MapActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+public class MapActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener,
         AlarmFragment.FragmentCallBack, GoogleMap.OnMarkerClickListener {
 
@@ -117,13 +124,12 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
 
     AlarmFragment newAlarmFrag;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Log.v(TAG, "onCreate");
+
 
         /* Initialisation of the arrays needed for the geofence, and a call to the default shared
          preferences. */
@@ -503,5 +509,43 @@ public class MapActivity extends FragmentActivity implements GoogleApiClient.Con
         }
 
         player.stop();
+    }
+
+    /* Overlay and UI stuff */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.map_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Go to Alarms activity method
+    public void goToAlarms(View view)
+    {
+        Intent intentAlarms = new Intent(MapActivity.this, LocationChoice.class);
+        startActivity(intentAlarms);
+    }
+
+    //Go to Settings activity method
+    public void goToSettings (View view)
+    {
+        Intent intentSettings = new Intent(MapActivity.this, SettingsActivity.class);
+        startActivity(intentSettings);
     }
 }

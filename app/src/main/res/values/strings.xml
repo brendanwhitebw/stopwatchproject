@@ -10,7 +10,9 @@
     <!-- Allan's UI strings -->
 
     <string name="stringMap">Map</string>
-    <string name="stringAlarms">Alarms</string>
+    <string name="stringAlarms">Choose Location</string>
 
     <string name="stringSettings">Settings</string>
+
+    <string name="distanceMeasureBtn">How far?</string>
 </resources>
