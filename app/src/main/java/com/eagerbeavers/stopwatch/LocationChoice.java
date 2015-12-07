@@ -130,6 +130,12 @@ public class LocationChoice extends AppCompatActivity  {
         Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
         startActivity(CustomIntent);
     }
+    public void Settingsbutton(View view)
+    {
+        Intent intent = new Intent(LocationChoice.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
 
     public void Insert(String route, String stop, double lat, double lng){
         BusDB entry = new BusDB(getApplicationContext(), route);
@@ -243,8 +249,10 @@ public class LocationChoice extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     //Go to Map activity method
-    public void gotToMap(View view)
+   /* public void gotToMap(View view)
     {
         Intent intentMap = new Intent(LocationChoice.this, HomeScreen.class);
         startActivity(intentMap);
@@ -255,5 +263,5 @@ public class LocationChoice extends AppCompatActivity  {
     {
         Intent intentAlarms = new Intent(LocationChoice.this, LocationChoice.class);
         startActivity(intentAlarms);
-    }
+    }*/
 }
