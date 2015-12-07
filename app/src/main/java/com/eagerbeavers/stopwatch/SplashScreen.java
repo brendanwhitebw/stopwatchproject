@@ -31,6 +31,7 @@ public class SplashScreen extends Activity {
                 }
             }
         };
+        //comment
 
 
         timer.start();
