@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_height="match_parent"
+<LinearLayout android:layout_height="fill_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:weightSum="10">
 
     <LinearLayout
-        android:layout_height="450dp"
+        android:layout_height="0dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight="9">
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter Custom route"
-        android:id="@+id/CustomRoute"
-        android:background="@drawable/button_pattern"
-        android:onClick="Custom"
-        android:layout_marginTop="64dp" />
-
-    <LinearLayout
+        <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="10">
+        android:weightSum="10"
+            android:background="@color/background">
 
         <TextView
             android:layout_width="0dp"
@@ -70,33 +64,41 @@
 
     <!-- Bottom Bar -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center|bottom"
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:background="@color/background"
-        >
+        android:layout_weight="1">
 
         <Button
-            android:layout_width="80dp"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Enter Custom route"
+            android:id="@+id/CustomRoute"
+            android:background="@drawable/button_pattern"
+            android:onClick="Custom"
+            android:layout_weight="5" />
+
+        <Button
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:onClick="gotToMap"
             android:text="@string/stringMap"
-            />
+            android:layout_weight="2.5"
+            android:background="@drawable/button_pattern" />
 
         <Button
             android:id="@+id/buttonAlarms"
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:onClick="goToAlarms"
             android:text="@string/stringAlarms"
-            />
+            android:layout_weight="2.5"
+            android:background="@drawable/button_pattern" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
