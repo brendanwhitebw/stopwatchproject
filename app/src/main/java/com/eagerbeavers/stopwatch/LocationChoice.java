@@ -98,7 +98,7 @@ public class LocationChoice extends AppCompatActivity  {
                     public void onItemClick(AdapterView<?> parent, View vies, int position, long id) {
                         String StopID = (String) parent.getItemAtPosition(position); // when item in route list is clicked set item to route/database name
 
-                        Intent geofenceIntent = new Intent(getApplicationContext(), MapActivity.class);
+                        Intent geofenceIntent = new Intent(getApplicationContext(), HomeScreen.class);
                         geofenceIntent.putExtra("id", StopID);
 
                         geofenceIntent.putExtra("lat", GetStopCoords(item, position + 1)[0]); // +1 because the array starts at zero, but the SQL DB starts at 1.
@@ -246,7 +246,7 @@ public class LocationChoice extends AppCompatActivity  {
     //Go to Map activity method
     public void gotToMap(View view)
     {
-        Intent intentMap = new Intent(LocationChoice.this, MapActivity.class);
+        Intent intentMap = new Intent(LocationChoice.this, HomeScreen.class);
         startActivity(intentMap);
     }
 

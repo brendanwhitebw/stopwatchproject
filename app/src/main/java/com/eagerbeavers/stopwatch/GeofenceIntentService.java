@@ -79,13 +79,13 @@ public class GeofenceIntentService extends IntentService {
         /* EXTRA!! */
         /* There seems to be an issue with this that crashes the program.
 
-        Intent notificationIntent = new Intent(getApplicationContext(), MapActivity.class);
+        Intent notificationIntent = new Intent(getApplicationContext(), HomeScreen.class);
 
         // Construct a task stack.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 
         // Add the main Activity to the task stack as the parent.
-        stackBuilder.addParentStack(MapActivity.class);
+        stackBuilder.addParentStack(HomeScreen.class);
 
         // Push the content Intent onto the stack.
         stackBuilder.addNextIntent(notificationIntent);
@@ -111,7 +111,7 @@ public class GeofenceIntentService extends IntentService {
         notificationManager.notify(0, notificationBuilder.build());
         wakeLock.release();
 
-        Intent mapIntent = new Intent(getBaseContext(), MapActivity.class);
+        Intent mapIntent = new Intent(getBaseContext(), HomeScreen.class);
         mapIntent.putExtra("Alert", true);
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

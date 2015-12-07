@@ -9,17 +9,18 @@
     tools:showIn="@layout/home_screen"
     tools:context=".HomeScreen">
 
-    <LinearLayout
-        android:layout_height="480dp"
+    <fragment
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-    </LinearLayout>
+        android:layout_height="550dp"
+        android:id="@+id/home_map"
+        tools:context="com.eagerbeavers.stopwatch.HomeScreenActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
 
     <!-- Bottom Bar -->
 
     <RelativeLayout
+        android:id="@+id/HomeBottomBar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:gravity="center|bottom"
@@ -29,18 +30,10 @@
         >
 
         <Button
-            android:layout_width="80dp"
+            android:id="@+id/buttonAlarms"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:onClick="gotToMap"
-            android:text="@string/stringMap"
-            />
-
-        <Button
-            android:id="@+id/buttonAlarms"
-            android:layout_width="80dp"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
             android:onClick="goToAlarms"
             android:text="@string/stringAlarms"
             />
@@ -55,5 +48,17 @@
             />
 
     </RelativeLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distanceMeasureBtn"
+        android:id="@+id/button"
+        android:layout_above="@id/HomeBottomBar"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:onClick="showDistance"
+        />
 
 </RelativeLayout>
