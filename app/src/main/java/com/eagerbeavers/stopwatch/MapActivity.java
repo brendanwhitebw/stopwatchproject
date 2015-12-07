@@ -124,20 +124,12 @@ public class MapActivity extends AppCompatActivity implements GoogleApiClient.Co
 
     AlarmFragment newAlarmFrag;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Log.v(TAG, "onCreate");
 
-        /* Toolbar and Crashlytics set up. */
-
-        Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.home_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
-        setSupportActionBar(toolbar);
 
         /* Initialisation of the arrays needed for the geofence, and a call to the default shared
          preferences. */
