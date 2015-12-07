@@ -9,56 +9,59 @@
     tools:showIn="@layout/home_screen"
     tools:context=".HomeScreen">
 
-    <fragment
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:id="@+id/home_map"
-        tools:context="com.eagerbeavers.stopwatch.HomeScreenActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        />
+        android:layout_height="match_parent">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/home_map"
+            tools:context="com.eagerbeavers.stopwatch.HomeScreenActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_weight="9" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/background">
+
+            <Button
+                android:id="@+id/buttonAlarms"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:onClick="goToAlarms"
+                android:text="@string/stringAlarms"
+                android:background="@drawable/button_pattern"
+                android:layout_weight="5" />
+
+            <Button
+                android:id="@+id/buttonSettings"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:onClick="goToSettings"
+                android:text="@string/stringSettings"
+                android:background="@drawable/button_pattern"
+                android:layout_weight="3" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:text="@string/distanceMeasureBtn"
+                android:id="@+id/button"
+                android:onClick="showDistance"
+                android:background="@drawable/button_pattern"
+                android:layout_weight="2.5" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <!-- Bottom Bar -->
-
-    <RelativeLayout
-        android:id="@+id/HomeBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center|bottom"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="@color/background"
-        >
-
-        <Button
-            android:id="@+id/buttonAlarms"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:onClick="goToAlarms"
-            android:text="@string/stringAlarms"
-            />
-
-        <Button
-            android:id="@+id/buttonSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:onClick="goToSettings"
-            android:text="@string/stringSettings"
-            />
-
-    </RelativeLayout>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/distanceMeasureBtn"
-        android:id="@+id/button"
-        android:layout_above="@id/HomeBottomBar"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:onClick="showDistance"
-        />
 
 </RelativeLayout>

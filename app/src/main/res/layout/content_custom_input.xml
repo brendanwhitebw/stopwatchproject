@@ -5,69 +5,79 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Enter Route"
-        android:id="@+id/textView5"
-        android:layout_marginTop="15dp" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/RouteText"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Enter Stop"
-        android:id="@+id/textView4" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="10">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/StopText"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="5" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Find"
-            android:id="@+id/findButton"
-            android:onClick="FindButton"
-            android:background="@drawable/button_pattern"
-            android:layout_weight="5" />
-    </LinearLayout>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Add stop to database"
-        android:id="@+id/AddStop"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_pattern"
-        android:onClick="AddButton"
-        android:enabled="false" />
-
     <fragment
         tools:context=".MapsActivity"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:id="@+id/map2"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_weight="6" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="#ffe8cc">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Enter Route"
+            android:id="@+id/textView5"
+            android:layout_marginTop="15dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/RouteText"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Enter Stop"
+            android:id="@+id/textView4" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/StopText"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Find"
+            android:id="@+id/findButton"
+            android:onClick="FindButton"
+            android:background="@drawable/button_pattern"
+            android:layout_weight="3" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Add stop to database"
+            android:id="@+id/AddStop"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_pattern"
+            android:onClick="AddButton"
+            android:enabled="false"
+            android:layout_weight="7" />
+    </LinearLayout>
 
 </LinearLayout>
