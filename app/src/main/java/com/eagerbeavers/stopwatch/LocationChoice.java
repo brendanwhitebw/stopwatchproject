@@ -112,6 +112,19 @@ public class LocationChoice extends AppCompatActivity  {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
+        RouteArray.clear();
+        for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
+            RouteArray.add(routeL[i]);
+        }
+
+        ArrayAdapter<String>  routeAdapter = new ArrayAdapter<String>(this, R.layout.customlocationlistview, android.R.id.text1,RouteArray);
+        RouteListView.setAdapter(routeAdapter); // populate route list
+    }
+
     public void Custom(View view) // button listener
     {
         Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
