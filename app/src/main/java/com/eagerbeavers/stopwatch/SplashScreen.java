@@ -21,13 +21,14 @@ public class SplashScreen extends Activity {
         Thread timer = new Thread() {
             public void run() {
                 try {
-                    sleep(5000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     Log.e(TAG, "Timer interrupted");
                 } finally {
                     Intent start = new Intent(SplashScreen.this, HomeScreen.class);
                     startActivity(start);
+                    finish();
                 }
             }
         };

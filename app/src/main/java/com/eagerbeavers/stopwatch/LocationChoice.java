@@ -226,6 +226,184 @@ public class LocationChoice extends AppCompatActivity  {
 
         Insert(route, stop, lat, lng);
 
+        route = "Dublin_Bus_67";
+        stop = "Maynooth (67A Terminus)";
+        lat = 53.379631;
+        lng = -6.589113;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Straffan Rd";
+        lat = 53.376533;
+        lng = -6.587171;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "RailPark Estate";
+        lat = 53.374001;
+        lng = -6.586522;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Griffin Rath";
+        lat = 53.369662;
+        lng = -6.580246;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cellbridge Road";
+        lat = 53.366645;
+        lng = -6.565880;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Salesian College";
+        lat = 53.359115;
+        lng = -6.551169;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Crodaun Forest Park";
+        lat = 53.354235;
+        lng = -6.547092;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Thornhill Court Estate";
+        lat = 53.352460;
+        lng = -6.546867;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Beatty Park Estate";
+        lat = 53.342779;
+        lng = -6.539781;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Chestnut Grove";
+        lat = 53.346046;
+        lng = -6.541712;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Celbridge, Main Street";
+        lat = 53.338638;
+        lng = -6.539610;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Don Cowper Riding School";
+        lat = 53.339791;
+        lng = -6.529525;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Ballyoulster Estate";
+        lat = 53.341969;
+        lng = -6.518625;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cellbridge Football Park";
+        lat = 53.343378;
+        lng = -6.511586;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Backweston Laboratory";
+        lat = 53.344633;
+        lng = -6.506222;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Backweston Park";
+        lat = 53.345914;
+        lng = -6.499656;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Lucan, Department of Agricultutre";
+        lat = 53.346978;
+        lng = -6.494613;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Weston Airfield";
+        lat = 53.348995;
+        lng = -6.489431;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cooldrinagh Lane";
+        lat = 53.353094;
+        lng = -6.480762;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Weston Estate";
+        lat = 53.356135;
+        lng = -6.475173;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Liffey Valley Golf Course";
+        lat = 53.359183;
+        lng = -6.473209;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Lucan, Leixlip Road (near Primrose Lane)";
+        lat = 53.355684;
+        lng = -6.454144;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Lucan Village";
+        lat = 53.356544;
+        lng = -6.447910;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Lucan Heights";
+        lat = 53.358084;
+        lng = -6.441843;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "St Mary's Church";
+        lat = 53.359621;
+        lng = -6.439498;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "St Edmundsbury Hospital";
+        lat = 53.359725;
+        lng = -6.430929;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Old Lucan Rd";
+        lat = 53.359347;
+        lng = -6.424379;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Hermitage Hospital";
+        lat = 53.358518;
+        lng = -6.408849;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Liffey Valley";
+        lat = 53.357762;
+        lng = -6.405201;
+
+        Insert(route, stop, lat, lng);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
