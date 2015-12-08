@@ -137,7 +137,7 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        RadDef = prefs.getInt("Radius", 200); //Default should be set to 4000 in future.
+        RadDef = prefs.getInt("Radius", 4000); //Default should be set to 4000 in future.
 
         /* Determining which activity sent the user here, and what extra information it sent is a
         core part of this activity, so we always get the intent that started this activity. */
