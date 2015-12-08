@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences prefs;
-
+    NumberPicker radPicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +26,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button radSetBtn = (Button) findViewById(R.id.setAlarmRadiusButton);
+        radSetBtn.setOnClickListener(this);
         Button radDefBtn = (Button) findViewById(R.id.setAlarmRadiusDefBtn);
-        NumberPicker radPicker = (NumberPicker) findViewById(R.id.radNumberPicker);
+        radDefBtn.setOnClickListener(this);
+        radPicker = (NumberPicker) findViewById(R.id.radNumberPicker);
+        radPicker.setMaxValue(20);
+        radPicker.setMinValue(1);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (prefs.contains("Radius")) {
@@ -46,7 +51,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (id) {
             case R.id.setAlarmRadiusButton:
-                NumberPicker radPicker = (NumberPicker) findViewById(R.id.radNumberPicker);
 
                 if (prefs.contains("Radius")) {
                     editor.remove("Radius");
@@ -55,13 +59,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 editor.putInt("Radius", (1000*radPicker.getValue()));
                 editor.apply();
 
-                Toast.makeText(getApplication(), "Radius changed!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), "Radius set!", Toast.LENGTH_LONG).show();
                 break;
             case R.id.setAlarmRadiusDefBtn:
                 if (prefs.contains("Radius")) {
                     editor.remove("Radius");
                     editor.apply();
                 }
+                radPicker.setValue(4);
                 editor.putInt("Radius", 4000);
                 editor.apply();
                 Toast.makeText(getApplication(), "Radius reset to 4 km!", Toast.LENGTH_LONG).show();
