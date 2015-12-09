@@ -17,7 +17,8 @@
     -->
     <!--Brendan's Key AIzaSyBlD0fn1uLMZTODWcJCUxoO9zsMblFOevk-->
     <!--Eoin's Key AIzaSyAZae40_FPr2Rn7Gr53rpgkcqw5-2Ax_LQ-->
+    <!--Allan's Key AIzaSyB1KPhXrc0-MhR50uq6Lx5Bsva2Wlb1juc-->
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
-        AIzaSyBlD0fn1uLMZTODWcJCUxoO9zsMblFOevk
+        AIzaSyB1KPhXrc0-MhR50uq6Lx5Bsva2Wlb1juc
     </string>
 </resources>
