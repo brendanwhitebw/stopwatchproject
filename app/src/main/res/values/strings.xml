@@ -17,4 +17,5 @@
     <string name="distanceMeasureBtn">How far?</string>
     <string name="title_activity_custom_input2">CustomInput2</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_alarms">AlarmsActivity</string>
 </resources>
