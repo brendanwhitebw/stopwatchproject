@@ -531,7 +531,7 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
     //Go to Alarms activity method
     public void goToAlarms(View view)
     {
-        Intent intentAlarms = new Intent(HomeScreen.this, LocationChoice.class);
+        Intent intentAlarms = new Intent(HomeScreen.this, AlarmsActivity.class);
         startActivity(intentAlarms);
     }
 
