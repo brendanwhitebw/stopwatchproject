@@ -36,7 +36,7 @@
                 android:layout_alignParentLeft="true"
                 android:onClick="goToAlarms"
                 android:text="Alarms"
-                android:background="@drawable/button_pattern"
+                android:background="@color/background"
                 android:layout_weight="5" />
 
             <LinearLayout
@@ -54,8 +54,9 @@
                 android:layout_alignParentRight="true"
                 android:onClick="goToSettings"
                 android:text="@string/stringSettings"
-                android:background="@drawable/button_pattern"
-                android:layout_weight="5" />
+                android:layout_weight="5"
+                android:background="@color/background"
+                />
 
             <!-- Commenting this out for now. Would like two buttons on either side max on bottom bar
 
