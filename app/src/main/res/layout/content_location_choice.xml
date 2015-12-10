@@ -89,10 +89,11 @@
             android:layout_height="fill_parent"
             android:text="Enter Custom route"
             android:id="@+id/CustomRoute"
-            android:background="@drawable/button_pattern"
             android:onClick="Custom"
             android:layout_weight="5"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:background="@color/background"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -109,8 +110,9 @@
             android:onClick="Settingsbutton"
             android:text="Settings"
             android:layout_weight="5"
-            android:background="@drawable/button_pattern"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            android:background="@color/background"
+            />
 
     </LinearLayout>
 

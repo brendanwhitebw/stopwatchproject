@@ -5,7 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- Allan's UI colours -->
-
-    <color name="background">#3F51B5</color>
+n
+    <color name="background">#ffcd48</color>
+    <color name="core">#ffe8cc</color>
 
 </resources>
