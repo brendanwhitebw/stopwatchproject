@@ -18,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,7 +51,7 @@ import io.fabric.sdk.android.Fabric;
 
 public class HomeScreen extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraChangeListener,
-        AlarmFragment.FragmentCallBack, GoogleMap.OnMarkerClickListener {
+        AlarmFragment.FragmentCallBack, GoogleMap.OnMarkerClickListener, LocationListener {
 
     // The tag for all of our Log outputs.
 
@@ -65,6 +67,8 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
 
     GoogleApiClient aGoogleApiClient;
     Location lastLocation;
+
+    Location myLocation;
 
     /* This is the default radius of the geofences, it will later be decided by user input, but for
      testing purposes is currently set to 100 m. */
@@ -540,5 +544,60 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
     {
         Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
         startActivity(intentSettings);
+    }
+
+    // A method to show the user how far their stop is.
+
+    public void showDistance (View view) {
+
+        // off1 and off2 are how far the toast is offset from the left and bottom respectively.
+
+        int off1 = 10;
+        int off2 = 200;
+        float distance = 0;
+        String unit = "";
+
+        if (Coordinates.get(0).latitude == 0 && Coordinates.get(0).longitude == 0) {
+            Toast toast = Toast.makeText(HomeScreen.this, "You don't have a destination set.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.LEFT, off1, off2);
+            toast.show();
+        } else {
+            Location destination = new Location("");
+            destination.setLatitude(Coordinates.get(0).latitude);
+            destination.setLongitude(Coordinates.get(0).longitude);
+
+            if (myLocation == null) {
+                if (lastLocation == null) {
+                    Toast toast = Toast.makeText(HomeScreen.this, "I haven't figured out where you are yet!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.LEFT, off1, off2);
+                    toast.show();
+                    return;
+                } else {
+                    distance = lastLocation.distanceTo(destination);
+                }
+            } else {
+                distance = myLocation.distanceTo(destination);
+            }
+
+            // We round some of the decimals away, and set the appropriate scale/unit type.
+
+            if (distance < 1000) {
+                distance = Math.round(distance*100)/100;
+                unit = "metres";
+            } else {
+                distance = Math.round(distance*10)/10;
+                distance = distance/1000;
+                unit = "kilometres";
+            }
+
+            Toast toast = Toast.makeText(HomeScreen.this, "You are " + distance + " " + unit + " from your destination.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.LEFT, off1, off2);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        myLocation = location;
     }
 }

@@ -98,7 +98,7 @@ public class GeofenceIntentService extends IntentService {
         /* END EXTRA */
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(R.mipmap.ic_beaver_button_1)
+                context).setSmallIcon(R.mipmap.ic_beaver_button_2)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setDefaults(Notification.DEFAULT_ALL)
