@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ffcd48</color>
+    <color name="colorPrimaryDark">#e5b840</color>
+    <color name="colorAccent">#e80808</color>
 
     <!-- Allan's UI colours -->
 n
     <color name="background">#ffcd48</color>
     <color name="core">#ffe8cc</color>
+
+    <color name="orig_primary">#3F51B5</color>
+    <color name="orig_pri_dark">#303F9F</color>
+    <color name="orig_accent">#FF4081</color>
 
 </resources>
