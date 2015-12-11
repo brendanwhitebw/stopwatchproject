@@ -143,6 +143,8 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
 
         RadDef = prefs.getInt("Radius", 4000); //Default should be set to 4000 in future.
 
+        RadDef = 100; // Testing mode!!!
+
         /* Determining which activity sent the user here, and what extra information it sent is a
         core part of this activity, so we always get the intent that started this activity. */
 
@@ -525,7 +527,13 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.toolbar_settings) {
+            Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
+            startActivity(intentSettings);
+            return true;
+        } else if (id == R.id.toolbar_alarms) {
+            Intent intentAlarms = new Intent(HomeScreen.this, AlarmsActivity.class);
+            startActivity(intentAlarms);
             return true;
         }
 
@@ -544,6 +552,11 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
     {
         Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
         startActivity(intentSettings);
+    }
+
+    public void goToLocationChoice (View view) {
+        Intent intentLocation = new Intent(HomeScreen.this, LocationChoice.class);
+        startActivity(intentLocation);
     }
 
     // A method to show the user how far their stop is.
