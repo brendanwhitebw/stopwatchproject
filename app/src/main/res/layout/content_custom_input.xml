@@ -15,41 +15,70 @@
         android:id="@+id/map2"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_gravity="right"
-        android:layout_weight="6" />
+        android:layout_weight="12" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="#ffe8cc">
+        android:layout_weight="1"
+        android:background="@color/background">
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Enter Route"
             android:id="@+id/textView5"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="0dp"
+            android:layout_weight="5"
+            />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/RouteText"
-            android:layout_gravity="center_horizontal" />
+
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Enter Stop"
-            android:id="@+id/textView4" />
+            android:id="@+id/textView4"
+            android:layout_weight="5"
+            />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ffe8cc">
+
+
+
+
+
+
+
+
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/RouteText"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"/>
+
+
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:id="@+id/StopText"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="5"/>
     </LinearLayout>
 
     <LinearLayout
