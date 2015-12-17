@@ -92,7 +92,7 @@
             android:onClick="Custom"
             android:layout_weight="5"
             android:textSize="10sp"
-            android:background="@color/background"
+            android:background="@drawable/button_pattern"
             />
 
         <LinearLayout
@@ -111,7 +111,7 @@
             android:text="Settings"
             android:layout_weight="5"
             android:textSize="10sp"
-            android:background="@color/background"
+            android:background="@drawable/button_pattern"
             />
 
     </LinearLayout>

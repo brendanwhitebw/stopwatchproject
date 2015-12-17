@@ -37,7 +37,7 @@
                     android:layout_height="fill_parent"
                     android:text="Back"
                     android:layout_weight="5"
-                    android:background="@color/background"
+                    android:background="@drawable/button_pattern"
                     />
 
                 <LinearLayout
@@ -53,7 +53,7 @@
                     android:layout_height="fill_parent"
                     android:text="New"
                     android:layout_weight="5"
-                    android:background="@color/background"
+                    android:background="@drawable/button_pattern"
                     />
             </LinearLayout>
 
@@ -96,7 +96,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="48dp"
                     android:text="On/off"
-                    android:background="@drawable/button_pattern"
+                    android:background="@drawable/curved_button_pattern"
                     android:layout_weight="8"
                     android:textSize="10sp"/>
 
@@ -104,7 +104,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="48dp"
                     android:text="Edit Alarm"
-                    android:background="@drawable/button_pattern"
+                    android:background="@drawable/curved_button_pattern"
                     android:layout_weight="2"
                     android:id="@+id/buttonEditActivity"
                     android:onClick="goToEdit"

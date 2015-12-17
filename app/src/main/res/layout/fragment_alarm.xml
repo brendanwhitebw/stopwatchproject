@@ -9,6 +9,7 @@
         android:layout_height="100dp"
         android:id="@+id/StopAlarmBtn"
         android:text="OKAY! Stop it!"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:background="@drawable/button_pattern" />
 
 </FrameLayout>
