@@ -38,7 +38,7 @@
                     android:layout_height="fill_parent"
                     android:text="Save"
                     android:layout_weight="5"
-                    android:background="@color/background"/>
+                    android:background="@drawable/button_pattern"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -53,7 +53,7 @@
                     android:layout_height="fill_parent"
                     android:text="Delete"
                     android:layout_weight="5"
-                    android:background="@color/background" />
+                    android:background="@drawable/button_pattern" />
             </LinearLayout>
 
             <!-- Centre Content -->
