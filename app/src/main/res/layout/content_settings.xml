@@ -84,6 +84,34 @@
                 android:layout_weight="5"
                 android:background="@drawable/curved_button_pattern" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/AlarmSoundSettings"
+                android:id="@+id/textViewAlarmSound" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/AlarmSoundSettings"
+                android:id="@+id/textViewCurrentAlarmSound" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSetDefaultAlarm"
+                android:text="Change Alarm"
+                android:onClick="chooseSound"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
