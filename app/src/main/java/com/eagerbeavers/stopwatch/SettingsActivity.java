@@ -1,5 +1,6 @@
 package com.eagerbeavers.stopwatch;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -101,5 +102,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                 break;
         }
+    }
+
+    public void chooseSound () {
+        Intent changeSoundIntent = new Intent();
+        changeSoundIntent.putExtra("AlarmToBeChanged", "DefaultAlarm");
+        startActivity(changeSoundIntent);
     }
 }
