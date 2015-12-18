@@ -22,6 +22,7 @@
     <string name="title_activity_alarms">AlarmsActivity</string>
 
     <string name="AlarmSoundSettings">Alarm Sound</string>
+    <string name="title_activity_sound_choice">SoundChoice</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.eagerbeavers.stopwatch;
 
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -456,12 +458,17 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
 
         Context context = this;
 
-        Uri alert = getAlarmSound();
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Uri alert;
+
+        if (prefs.getLong("DefaultAlarm", 0) != 0) {
+            alert = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, prefs.getLong("DefaultAlarm", 0));
+        } else {
+            alert = getAlarmSound();
+        }
 
         player = new MediaPlayer();
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
 
         try {
             player.setDataSource(context, alert);

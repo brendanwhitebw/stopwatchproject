@@ -104,8 +104,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public void chooseSound () {
-        Intent changeSoundIntent = new Intent();
+    public void chooseSound (View v) {
+        Intent changeSoundIntent = new Intent(this, SoundChoice.class);
         changeSoundIntent.putExtra("AlarmToBeChanged", "DefaultAlarm");
         startActivity(changeSoundIntent);
     }
