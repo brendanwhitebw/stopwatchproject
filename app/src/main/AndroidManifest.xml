@@ -87,7 +87,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
         </activity>
-
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -95,21 +94,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".AlarmsActivity"
             android:label="@string/title_activity_alarms"
             android:parentActivityName=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditActivity"
             android:label="EditActivity"
             android:parentActivityName=".HomeScreen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SoundChoice"
+            android:label="@string/title_activity_sound_choice"
+            android:parentActivityName=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="SettingsActivity" />
         </activity>
     </application>
 
