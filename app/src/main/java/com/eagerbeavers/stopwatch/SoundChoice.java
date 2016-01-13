@@ -22,6 +22,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/* This activity is designed to fetch the URI of all audio files on the device, and display them in lists
+first a list of albums, then a sublist of actual tracks. Once the user chooses a track, it's URI is
+stored in shared Preferences, so that it can be accessed by the alarm methods in the main activity.
+ */
+
 public class SoundChoice extends AppCompatActivity {
 
     SharedPreferences prefs;
@@ -43,23 +48,15 @@ public class SoundChoice extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Preference manager is vital to the storage of the URI
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // The actual name of the alarm audio's URI in SharedPrefs is based her from Settings.
 
         gotHereFrom = this.getIntent();
 
-        if (gotHereFrom.hasExtra("AlarmToBeChanged")) {
-            SharedPreferences.Editor editor = prefs.edit();
-
-            String alarmName = gotHereFrom.getStringExtra("AlarmToBeChanged");
-
-            if (prefs.getLong(alarmName, 0) != 0) {
-                editor.remove(alarmName);
-                editor.apply();
-            }
-
-            /*editor.putLong(alarmName, TrackID);
-            editor.apply();*/
-        }
+        // We initialise the various lists and list views needed for the activity here.
 
         ListView albumList = (ListView) findViewById(R.id.AlbumListView);
 
@@ -69,9 +66,15 @@ public class SoundChoice extends AppCompatActivity {
 
         ArrayList<String> mediaAlbum = new ArrayList<String>();
 
+        // content resolver is what provides the list of audio files to the acitivity.
+
         ContentResolver contentResolver = getContentResolver();
 
+        // A designation of the kind of uri we are looking for.
+
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        // A cursor is an object that can move through the values returned by the content resolver and it's designated uri type and interact with them
 
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
 
@@ -85,6 +88,8 @@ public class SoundChoice extends AppCompatActivity {
             int album = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
 
             do {
+                // Once we are ready to use the cursor without error, we add every album to the album list, ensuring that there are no duplicates.
+
                 String thisAlbum = cursor.getString(album);
 
                 boolean albumThere = false;
@@ -101,7 +106,11 @@ public class SoundChoice extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
 
+        // Sort the album titles alphabetically
+
         Collections.sort(mediaAlbum);
+
+        // Adapt list of albums into user interactive list view.
 
         ArrayAdapter<String> titleAdapter = new ArrayAdapter<String>(this, R.layout.customlocationlistview, android.R.id.text1, mediaAlbum);
 
@@ -114,6 +123,8 @@ public class SoundChoice extends AppCompatActivity {
 
                 mediaTitle.clear();
                 mediaID.clear();
+
+                // the same process that we used to find album titles, we use to find tracks on that album.
 
                 ContentResolver contentResolver = getContentResolver();
 
@@ -142,10 +153,15 @@ public class SoundChoice extends AppCompatActivity {
                     } while (cursor.moveToNext());
                 }
 
+                // We turn the list of tracks into yet another interactive list view.
+
                 ListView trackList = (ListView) findViewById(R.id.TrackListView);
 
                 ArrayAdapter<String> songAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customlocationlistview, android.R.id.text1, mediaTitle);
-                trackList.setAdapter(songAdapter); // populate stop list
+                trackList.setAdapter(songAdapter);
+
+                /* finally when the user selects a track, that track's URI designation is stored as
+                a long, and it's title is stored as a String in shared prefs. */
 
                 trackList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
