@@ -32,8 +32,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button ThemeButton = (Button) findViewById(R.id.ThemeButton);
-        ThemeButton.setOnClickListener(this);
+        //Button ThemeButton = (Button) findViewById(R.id.ThemeButton);
+        //ThemeButton.setOnClickListener(this);
         Button radSetBtn = (Button) findViewById(R.id.setAlarmRadiusButton);
         radSetBtn.setOnClickListener(this);
         Button radDefBtn = (Button) findViewById(R.id.setAlarmRadiusDefBtn);
@@ -44,10 +44,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         TextView trackName = (TextView) findViewById(R.id.textViewCurrentAlarmSound);
 
-        this.arraySpinner = new String[] {"Theme 1", "Theme 2", "Theme 3"};  // setting up spinner
-        ThemeSpinner = (Spinner) findViewById(R.id.ThemeSpinner);
-        ArrayAdapter<String> ThemeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
-        ThemeSpinner.setAdapter(ThemeAdapter);
+        //this.arraySpinner = new String[] {"Theme 1", "Theme 2", "Theme 3"};  // setting up spinner
+        //ThemeSpinner = (Spinner) findViewById(R.id.ThemeSpinner);
+        //ArrayAdapter<String> ThemeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
+        //ThemeSpinner.setAdapter(ThemeAdapter);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -93,7 +93,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 editor.apply();
                 Toast.makeText(getApplication(), "Radius reset to 4 km!", Toast.LENGTH_LONG).show();
                 break;
-            case R.id.ThemeButton:
+            /*case R.id.ThemeButton:
                 String SpinnerText;
                 SpinnerText = ThemeSpinner.getSelectedItem().toString();
                 if(SpinnerText.equals("Theme 1")){
@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     // change to theme 3 here
                 }
 
-                break;
+                break;*/
         }
     }
 
@@ -126,5 +126,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             editor.remove("DefaultAlarm");
             editor.apply();
         }
+
+        if (prefs.contains("CurrentAlarmTrackName")) {
+            editor.remove("CurrentAlarmTrackName");
+            editor.apply();
+        }
+
+        TextView trackName = (TextView) findViewById(R.id.textViewCurrentAlarmSound);
+        trackName.setText("Phone's Alarm Sound");
     }
 }
