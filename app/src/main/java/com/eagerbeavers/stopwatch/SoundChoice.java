@@ -75,6 +75,8 @@ public class SoundChoice extends AppCompatActivity {
 
         Cursor cursor = contentResolver.query(uri, null, null, null, null);
 
+        // Ensuring code only runs if the cursor exists and is set to the correct position.
+
         if (cursor == null) {
 
         } else if (!cursor.moveToFirst()) {
@@ -163,6 +165,14 @@ public class SoundChoice extends AppCompatActivity {
                             }
 
                             editor.putLong(alarmName, TrackID);
+                            editor.apply();
+
+                            if (prefs.contains("CurrentAlarmTrackName")) {
+                                editor.remove("CurrentAlarmTrackName");
+                                editor.apply();
+                            }
+
+                            editor.putString("CurrentAlarmTrackName", song);
                             editor.apply();
 
                             Toast.makeText(getApplicationContext(), alarmName + " is set to " + song, Toast.LENGTH_LONG).show();

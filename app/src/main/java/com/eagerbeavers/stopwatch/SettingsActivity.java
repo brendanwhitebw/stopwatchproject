@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         radPicker.setMaxValue(20);
         radPicker.setMinValue(1);
 
+        TextView trackName = (TextView) findViewById(R.id.textViewCurrentAlarmSound);
+
         this.arraySpinner = new String[] {"Theme 1", "Theme 2", "Theme 3"};  // setting up spinner
         ThemeSpinner = (Spinner) findViewById(R.id.ThemeSpinner);
         ArrayAdapter<String> ThemeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
@@ -52,6 +55,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             radPicker.setValue(prefs.getInt("Radius", 4000)/1000);
         } else {
             radPicker.setValue(4);
+        }
+
+        if (prefs.contains("CurrentAlarmTrackName")) {
+            trackName.setText(prefs.getString("CurrentAlarmTrackName", "Phone's Alarm Sound"));
+        } else {
+            trackName.setText("Phone's Alarm Sound");
         }
     }
 
@@ -108,5 +117,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Intent changeSoundIntent = new Intent(this, SoundChoice.class);
         changeSoundIntent.putExtra("AlarmToBeChanged", "DefaultAlarm");
         startActivity(changeSoundIntent);
+    }
+
+    public void resetAlarmSound (View v) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        if (prefs.contains("DefaultAlarm")) {
+            editor.remove("DefaultAlarm");
+            editor.apply();
+        }
     }
 }
