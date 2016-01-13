@@ -62,7 +62,7 @@
                 android:layout_weight="2.5"
                 android:background="@drawable/curved_button_pattern" />
         </LinearLayout>
-
+        <!-- Under Contruction
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -84,31 +84,46 @@
                 android:layout_weight="5"
                 android:background="@drawable/curved_button_pattern" />
         </LinearLayout>
-
+        -->
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:textColor="#000"
                 android:text="@string/AlarmSoundSettings"
                 android:id="@+id/textViewAlarmSound" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="@string/AlarmSoundSettings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:textColor="#000"
+                android:text="@string/currentAlarmSound"
                 android:id="@+id/textViewCurrentAlarmSound" />
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/btnResetAlarmSound"
+                android:text="Reset"
+                android:onClick="resetAlarmSound"
+                android:background="@drawable/curved_button_pattern"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
                 android:id="@+id/btnSetDefaultAlarm"
                 android:text="Change Alarm"
-                android:onClick="chooseSound"/>
+                android:onClick="chooseSound"
+                android:background="@drawable/curved_button_pattern"/>
 
         </LinearLayout>
 
