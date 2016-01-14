@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -20,77 +17,127 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+/* This class, which is always executed in the Context of the HomeScreen, does the actual
+ * work of setting up the geofence, and it's related service, using google API clients.
+ */
+
 public class GeofenceStore implements ConnectionCallbacks,
-        OnConnectionFailedListener, ResultCallback<Status>, LocationListener {
+        OnConnectionFailedListener, ResultCallback<Status> {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    /**
-     * Context
-     */
-    private Context mContext;
+    /* Context, again note, context here means the HomeScreen the user has started. */
 
-    /**
-     * Google API client object.
-     */
-    private GoogleApiClient mGoogleApiClient;
+    private Context Context;
 
-    /**
-     * Geofencing PendingIntent
-     */
-    public PendingIntent mPendingIntent;
+    /* Google API client object. */
 
-    /**
-     * List of geofences to monitor.
-     */
-    private ArrayList<Geofence> mGeofences;
+    private GoogleApiClient GoogleApiClient;
 
-    /**
-     * Geofence request.
+    /* Geofencing PendingIntent, allowing the service to hold an intent at the ready for activation
+     * at a later time.
      */
-    private GeofencingRequest mGeofencingRequest;
 
-    /**
-     * Location Request object.
-     */
-    private LocationRequest mLocationRequest;
+    public PendingIntent PendingIntent;
 
-    /**
-     * Constructs a new GeofenceStore.
-     *
-     * @param context The context to use.
-     * @param geofences List of geofences to monitor.
-     */
+    /* List of geofences to monitor. */
+
+    private ArrayList<Geofence> Geofences;
+
+    /* Geofence request. */
+
+    private GeofencingRequest GeofencingRequest;
+
+    /* Constructor for the geofenceStore. It takes in the context (HomeScreen) a list of Geofences,
+    * as built in HomeScreen. */
 
     public GeofenceStore(Context context, ArrayList<Geofence> geofences) {
-        mContext = context;
-        mGeofences = new ArrayList<Geofence>(geofences);
-        mPendingIntent = null;
+        // Initialisation of variables.
 
-        // Build a new GoogleApiClient, specify that we want to use LocationServices
-        // by adding the API to the client, specify the connection callbacks are in
-        // this class as well as the OnConnectionFailed method.
-        mGoogleApiClient = new GoogleApiClient.Builder(context)
-                .addApi(LocationServices.API).addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this).build();
+        Context = context;
+        Geofences = new ArrayList<Geofence>(geofences);
+        PendingIntent = null;
 
-        // This is purely optional and has nothing to do with geofencing.
-        // I added this as a way of debugging.
-        // Define the LocationRequest.
-        mLocationRequest = new LocationRequest();
-        // We want a location update every 10 seconds.
-        mLocationRequest.setInterval(10000);
-        // We want the location to be as accurate as possible.
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        /* Build a new GoogleApiClient, specify that we want to use LocationServices by adding the
+         * API to the client, specify the connection callbacks are in this class as well as the
+         * OnConnectionFailed method.
+         */
 
-        mGoogleApiClient.connect();
+        GoogleApiClient = new GoogleApiClient.Builder(context)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
+        //Connect to our just defined API client.
+
+        GoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        /* If the Google API client successfully connects, we create a GeofencingRequest with the
+         * geofences we been passed from HomeScreen.
+         */
+
+        GeofencingRequest = new GeofencingRequest.Builder().addGeofences(Geofences).build();
+
+        /* We then call a method to set up our pending intent and return it to us. */
+
+        PendingIntent = createRequestPendingIntent();
+
+        /* We set up a pending result, telling the app to wait for the activation of the geofence
+         * just established, and when it is triggered to activate the pending intent we just created.
+         */
+
+        PendingResult<Status> pendingResult = LocationServices.GeofencingApi
+                .addGeofences(GoogleApiClient, GeofencingRequest, PendingIntent);
+
+        //  We then set the result callbacks listener to this class.
+        pendingResult.setResultCallback(this);
+    }
+
+    // The following methods are a part of implementing the API client and it's various functions.
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.v(TAG, "Connection failed.");
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        Log.v(TAG, "Connection suspended.");
+    }
+
+    /**
+     * This creates, and returns, a PendingIntent that is to be used when geofence transitions take
+     * place. In this instance, we are using an IntentService, GeofenceIntentService, to handle the
+     * transitions.
+     */
+
+    private PendingIntent createRequestPendingIntent() {
+        if (PendingIntent == null) {
+            Log.v(TAG, "Creating PendingIntent");
+
+            /* It is important to note the pending intent is passing the context of HomeScreen
+             * to the Service, which means the service can issue instructions as if it were an
+             * intent in HomeScreen.
+             */
+
+            Intent intent = new Intent(Context, GeofenceIntentService.class);
+            PendingIntent = PendingIntent.getService(Context, 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+        return PendingIntent;
     }
 
 
+     /* This method relates to PendingResult in the onConnected method, and logs that result. It is
+      * part of the ResultCallbacks interface.
+      */
 
     @Override
     public void onResult(Status result) {
@@ -105,76 +152,15 @@ public class GeofenceStore implements ConnectionCallbacks,
         } else {
 
         }
-
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.v(TAG, "Connection failed.");
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        // We're connected, now we need to create a GeofencingRequest with
-        // the geofences we have stored.
-        mGeofencingRequest = new GeofencingRequest.Builder().addGeofences(
-                mGeofences).build();
-
-        mPendingIntent = createRequestPendingIntent();
-
-        // This is for debugging only and does not affect
-        // geofencing.
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-
-        // Submitting the request to monitor geofences.
-        PendingResult<Status> pendingResult = LocationServices.GeofencingApi
-                .addGeofences(mGoogleApiClient, mGeofencingRequest,
-                        mPendingIntent);
-
-        // Set the result callbacks listener to this class.
-        pendingResult.setResultCallback(this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause) {
-        Log.v(TAG, "Connection suspended.");
-    }
-
-    /**
-     * This creates a PendingIntent that is to be fired when geofence transitions
-     * take place. In this instance, we are using an IntentService to handle the
-     * transitions.
-     *
-     * @return A PendingIntent that will handle geofence transitions.
+    /* This method is called from HomeScreen when that activity is stopped to ensure the API client
+     * disconnects cleanly and doesn't interfere with other processes or future calls.
      */
-    private PendingIntent createRequestPendingIntent() {
-        if (mPendingIntent == null) {
-            Log.v(TAG, "Creating PendingIntent");
-            Intent intent = new Intent(mContext, GeofenceIntentService.class);
-            mPendingIntent = PendingIntent.getService(mContext, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-        }
-
-        return mPendingIntent;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-        Log.v(TAG, "Location Information\n"
-                + "==========\n"
-                + "Provider:\t" + location.getProvider() + "\n"
-                + "Lat & Long:\t" + location.getLatitude() + ", "
-                + location.getLongitude() + "\n"
-                + "Altitude:\t" + location.getAltitude() + "\n"
-                + "Bearing:\t" + location.getBearing() + "\n"
-                + "Speed:\t\t" + location.getSpeed() + "\n"
-                + "Accuracy:\t" + location.getAccuracy() + "\n");
-    }
 
     public void disconnect() {
-        mGoogleApiClient.disconnect();
+        Log.v(TAG, "API client disconnected");
+        GoogleApiClient.disconnect();
     }
 }
 
