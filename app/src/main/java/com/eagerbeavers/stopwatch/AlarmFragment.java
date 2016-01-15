@@ -23,9 +23,19 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+/* This fragment has two main functions, it displays a fragment telling the user the alarm is on
+ * and a button allowing them to turn it off. The fragment also has a Fragment Callback, which
+ * allows the fragment to call static methods from the class it's attached to, i.e. HomeScreen.
+ * It uses these methods to control the media player, and cancel the pending intent that triggered
+ * the alarm in the first place.
+ */
+
 public class AlarmFragment extends DialogFragment {
 
     final String TAG = "stopwatch.AlarmFragment";
+
+    // Boolean recording whether Alarm has been stopped.
+
     boolean stopped = false;
 
     PowerManager pm;
@@ -37,11 +47,23 @@ public class AlarmFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.fragment_alarm, container, false);
         getDialog().setTitle("Arrived!");
 
+
+        /* Access the power service, wake up the phone, and keep it awake until the wakelock is
+         * unlocked.
+         */
+
         pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
         wakeLock.acquire();
 
+        /* Access the play method from the HomeScreen using the Fragment Callback interface.
+         * This starts the alarm sound playing.
+         */
+
         callback.play();
+
+        /* The button used to stop the alarm playing and cancel it's geofence intent.
+         * */
 
         Button stopBtn = (Button) rootView.findViewById(R.id.StopAlarmBtn);
         stopBtn.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +71,8 @@ public class AlarmFragment extends DialogFragment {
             public void onClick(View v) {
                 callback.cancelPendingIntent();
                 callback.stopAlarm();
-                stopped = true;
-                wakeLock.release();
+                stopped = true; // We have stopped the alarm deliberately now.
+                wakeLock.release(); // The phone may sleep once the alarm is off again.
                 dismiss();
             }
         });
@@ -58,13 +80,18 @@ public class AlarmFragment extends DialogFragment {
         return rootView;
     }
 
+    /* This interface is implemented by HomeScreen, so that once this Fragment attachs to that
+     * class we can access the static methods found therein. This makes dealing with pending intents
+     * and Media players much easier than trying to access them directly from this Fragment.
+     */
+
     public interface FragmentCallBack {
-        public void cancelPendingIntent();
+        public void cancelPendingIntent(); // See homeScreen for the details, the purpose of each is self-explanatory.
         public void play();
         public void stopAlarm();
     }
 
-    private FragmentCallBack callback;
+    private FragmentCallBack callback; // An instance of the callback interface we then attach to HomeScreen once the Fragment attaches.
 
     @Override
     public void onAttach(Activity activity) {
@@ -76,10 +103,21 @@ public class AlarmFragment extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
         Log.v(TAG, "onDestroyView");
+
+        /* If the user accidentally leaves the alarm fragment, they are told as much, and the alarm
+         * will be able to trigger again. This won't happen if they have deliberately cancelled the
+         * alarm.
+         */
+
         if (!stopped) {
             Toast.makeText(getActivity(), "You haven't stopped the Alarm correctly!!!", Toast.LENGTH_SHORT).show();
             callback.stopAlarm();
         }
+
+        /* For power preservation reasons, we also need to cancel the wakelock if they accidentally
+         * the screen so their device isn't trapped awake. In fact wakelocks that can be indefinite
+         * provide errors themselves.
+         */
 
         if (wakeLock != null) {
             try {

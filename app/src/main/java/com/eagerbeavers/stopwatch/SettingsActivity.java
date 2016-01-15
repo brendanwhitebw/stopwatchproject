@@ -28,12 +28,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        // Settinng up Toolbar.
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.settingsActToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Button ThemeButton = (Button) findViewById(R.id.ThemeButton);
-        //ThemeButton.setOnClickListener(this);
+        // The buttons and numberpicker used in the radius settings.
+
         Button radSetBtn = (Button) findViewById(R.id.setAlarmRadiusButton);
         radSetBtn.setOnClickListener(this);
         Button radDefBtn = (Button) findViewById(R.id.setAlarmRadiusDefBtn);
@@ -42,20 +44,25 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         radPicker.setMaxValue(20);
         radPicker.setMinValue(1);
 
+        // The track name text view for the sound settings. Displays the current alarm.
+
         TextView trackName = (TextView) findViewById(R.id.textViewCurrentAlarmSound);
 
-        //this.arraySpinner = new String[] {"Theme 1", "Theme 2", "Theme 3"};  // setting up spinner
-        //ThemeSpinner = (Spinner) findViewById(R.id.ThemeSpinner);
-        //ArrayAdapter<String> ThemeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arraySpinner);
-        //ThemeSpinner.setAdapter(ThemeAdapter);
+        // Preference manager is used to import and export saved settings.
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        /* If the user already set a radius, it is used here instead of the default. Note the
+         * conversion from metres in the actual stored value, and kilometres in the displayed values.
+         */
 
         if (prefs.contains("Radius")) {
             radPicker.setValue(prefs.getInt("Radius", 4000)/1000);
         } else {
             radPicker.setValue(4);
         }
+
+        /* If the user has changed the default alarm, their current alarm will be set in track name. */
 
         if (prefs.contains("CurrentAlarmTrackName")) {
             trackName.setText(prefs.getString("CurrentAlarmTrackName", "Phone's Alarm Sound"));
@@ -68,56 +75,57 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         int id = v.getId();
 
+        // Again using shared preferences to store and access saved settings info.
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
 
         switch (id) {
             case R.id.setAlarmRadiusButton:
 
-                if (prefs.contains("Radius")) {
+                /* Set alarm button takes the value currently on the number picker, and saves it
+                 * times 1000 as a metre value to be accessed by HomeScreen when creating geofences.
+                 */
+
+                if (prefs.contains("Radius")) { // Clear current value first.
                     editor.remove("Radius");
                     editor.apply();
                 }
                 editor.putInt("Radius", (1000*radPicker.getValue()));
                 editor.apply();
 
-                Toast.makeText(getApplication(), "Radius set!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), "Radius set!", Toast.LENGTH_LONG).show(); //Inform user of success.
                 break;
+
             case R.id.setAlarmRadiusDefBtn:
+
+                /* Resetting the value to it's default, removing the saved value, and setting the
+                 * picker to 4.
+                 */
+
                 if (prefs.contains("Radius")) {
                     editor.remove("Radius");
                     editor.apply();
                 }
                 radPicker.setValue(4);
-                editor.putInt("Radius", 4000);
-                editor.apply();
+
                 Toast.makeText(getApplication(), "Radius reset to 4 km!", Toast.LENGTH_LONG).show();
                 break;
-            /*case R.id.ThemeButton:
-                String SpinnerText;
-                SpinnerText = ThemeSpinner.getSelectedItem().toString();
-                if(SpinnerText.equals("Theme 1")){
-
-                    // change theme 1 here
-                }
-                else if(SpinnerText.equals("Theme 2")){
-
-                    // change theme 2 here
-                }
-                else{
-
-                    // change to theme 3 here
-                }
-
-                break;*/
         }
     }
+
+    /* This button will take the user to the SoundChoice activity where they can browse and select audio files from the system. */
 
     public void chooseSound (View v) {
         Intent changeSoundIntent = new Intent(this, SoundChoice.class);
         changeSoundIntent.putExtra("AlarmToBeChanged", "DefaultAlarm");
         startActivity(changeSoundIntent);
     }
+
+    /* This button removes the alarm id (a long reference to a URI) from Shared preferences,
+     * as well as the stored track name used to set the text view here. It then manually resets
+     * the track name display to the default value.
+     */
 
     public void resetAlarmSound (View v) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this);

@@ -18,6 +18,9 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
+
+            <!-- Set destination button placed on Toolbar in overlay layout. -->
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

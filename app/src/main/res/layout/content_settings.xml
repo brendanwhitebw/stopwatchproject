@@ -9,11 +9,14 @@
     tools:showIn="@layout/activity_settings"
     android:background="#ffe8cc">
 
+    <!-- This layout consists of a series of horizontal linear layouts, one for each changeable variable. -->
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <!-- Layout for setting radius of geofence/alarm, using a number picker. -->
 
         <LinearLayout
             android:orientation="horizontal"
@@ -62,29 +65,9 @@
                 android:layout_weight="2.5"
                 android:background="@drawable/curved_button_pattern" />
         </LinearLayout>
-        <!-- Under Contruction
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="20dp">
 
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/ThemeSpinner"
-                android:layout_weight="5"
-                android:spinnerMode="dropdown" />
+        <!-- Setting the alarm sound, including a button that takes you to a different activity. -->
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:text="Set Theme"
-                android:id="@+id/ThemeButton"
-                android:layout_weight="5"
-                android:background="@drawable/curved_button_pattern" />
-        </LinearLayout>
-        -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
