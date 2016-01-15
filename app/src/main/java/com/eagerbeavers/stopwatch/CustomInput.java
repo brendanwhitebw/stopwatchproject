@@ -151,7 +151,8 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         final LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
         // gets co-ordinates of current location
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20)); // moves camera to current location on start up
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        // moves camera to current location on start up(15 is zoom level)
 
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() { // listener for long map click
             @Override
