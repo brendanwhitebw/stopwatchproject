@@ -21,9 +21,9 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_alarms">AlarmsActivity</string>
 
-    <string name="AlarmSoundSettings">Alarm</string>
-    <string name="title_activity_sound_choice">SoundChoice</string>
-    <string name="currentAlarmSound">Track</string>
+    <string name="AlarmSoundSettings">ALARM</string>
+    <string name="title_activity_sound_choice">SOUNDCHOICE</string>
+    <string name="currentAlarmSound">TRACK</string>
 
 
 </resources>

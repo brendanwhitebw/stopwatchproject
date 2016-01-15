@@ -35,7 +35,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Route"
+            android:text="ROUTE"
             android:id="@+id/textView2"
             android:layout_weight="5"
             android:layout_marginTop="15dp"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Stop"
+            android:text="STOP"
             android:id="@+id/textView"
             android:layout_weight="5"
             android:layout_marginTop="15dp"
@@ -87,11 +87,11 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:text="Enter Custom route"
+            android:text="Custom"
             android:id="@+id/CustomRoute"
             android:onClick="Custom"
             android:layout_weight="5"
-            android:textSize="10sp"
+            android:textSize="17sp"
             android:background="@drawable/button_pattern"
             />
 
@@ -110,7 +110,7 @@
             android:onClick="Settingsbutton"
             android:text="Settings"
             android:layout_weight="5"
-            android:textSize="10sp"
+            android:textSize="17sp"
             android:background="@drawable/button_pattern"
             />
 

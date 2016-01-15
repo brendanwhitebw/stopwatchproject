@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Album"
+                    android:text="ALBUM"
                     android:id="@+id/textView2"
                     android:layout_weight="5"
                     android:layout_marginTop="15dp"
@@ -45,7 +45,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Track"
+                    android:text="TRACK"
                     android:id="@+id/textView"
                     android:layout_weight="5"
                     android:layout_marginTop="15dp"

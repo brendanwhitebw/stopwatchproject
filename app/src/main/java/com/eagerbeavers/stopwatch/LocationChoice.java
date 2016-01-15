@@ -51,14 +51,14 @@ public class LocationChoice extends AppCompatActivity  {
         if (!prefs.getBoolean("firstTime", false)) {
             Toast.makeText(this, "First!", Toast.LENGTH_LONG).show();
 
-            databaseSetup();// fills data base on first install of app
+            databaseSetup();// fills database on first install of app
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("firstTime", true);
+            // sets shared preference firsttime to true so this will not run again once database is
+            // created with hard coded routes and stops
             editor.commit();
         }
-
-        //databaseSetup();// While fiddling with database always set it up.
 
         StopListView = (ListView) findViewById(R.id.StopListView);
         RouteListView = (ListView) findViewById(R.id.RouteListView);
@@ -66,8 +66,9 @@ public class LocationChoice extends AppCompatActivity  {
 
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
 
-        for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
-            RouteArray.add(routeL[i]);
+        for(int i = 0; i < routeL.length; i += 2) {
+        // new array to filter out every second database name that is returned by databaselist
+            RouteArray.add(routeL[i]); // add database name to array
         }
 
 
@@ -78,16 +79,16 @@ public class LocationChoice extends AppCompatActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View vies, int position, long id) {
                 item = (String) parent.getItemAtPosition(position); // when item in route list is clicked set item to route/database name
-                StopArray.clear(); // clear array list
+                StopArray.clear(); // clear stop array list
                 int rowNum = rowCount(item); // get number of rows in route table
 
                 stopLat = new double[rowNum];
-                stopLong = new double[rowNum];
+                stopLong = new double[rowNum]; // initilze array size to the number of rows in table
 
                 for (int i = 1; i <= rowNum; i++) {
-                    StopArray.add(GetStopName(item, i)); // add each stop name in the route table to array list
+                    StopArray.add(GetStopName(item, i)); // add each stop name in the route table to stop array list
                     stopLat[i - 1] = GetStopCoords(item, i)[0];
-                    stopLong[i - 1] = GetStopCoords(item, i)[1];
+                    stopLong[i - 1] = GetStopCoords(item, i)[1]; // returns co-ordinates for route clicked
                 }
 
                 ArrayAdapter<String> stopAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customlocationlistview, android.R.id.text1 , StopArray);
@@ -96,14 +97,15 @@ public class LocationChoice extends AppCompatActivity  {
                 StopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View vies, int position, long id) {
-                        String StopID = (String) parent.getItemAtPosition(position); // when item in route list is clicked set item to route/database name
+                        String StopID = (String) parent.getItemAtPosition(position);
+                        // when item in stop list is clicked set stopID to stop name
 
-                        Intent geofenceIntent = new Intent(getApplicationContext(), HomeScreen.class);
+                        Intent geofenceIntent = new Intent(getApplicationContext(), HomeScreen.class); // creates intent to map screen
                         geofenceIntent.putExtra("id", StopID);
 
                         geofenceIntent.putExtra("lat", GetStopCoords(item, position + 1)[0]); // +1 because the array starts at zero, but the SQL DB starts at 1.
                         geofenceIntent.putExtra("lng", GetStopCoords(item, position + 1)[1]);
-
+                        // passes data with intent to homescreen
                         startActivity(geofenceIntent);
                     }
                 });
@@ -116,13 +118,13 @@ public class LocationChoice extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
-        RouteArray.clear();
+        RouteArray.clear(); // clears route list
         for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
-            RouteArray.add(routeL[i]);
+            RouteArray.add(routeL[i]); // populates route array
         }
 
         ArrayAdapter<String>  routeAdapter = new ArrayAdapter<String>(this, R.layout.customlocationlistview, android.R.id.text1,RouteArray);
-        RouteListView.setAdapter(routeAdapter); // populate route list
+        RouteListView.setAdapter(routeAdapter); // populate route list with route array content
     }
 
     /* We can move CustomInput to the toolbar to match the button on the Homescreen, and settings
@@ -143,39 +145,42 @@ public class LocationChoice extends AppCompatActivity  {
 
 
     public void Insert(String route, String stop, double lat, double lng){
-        BusDB entry = new BusDB(getApplicationContext(), route);
-        entry.open();
+        BusDB entry = new BusDB(getApplicationContext(), route); // creates new database object
+        entry.open(); // creates database unless it already exists
         entry.createEntry(stop, lat, lng); // create new entry in db
-        entry.close();
+        entry.close(); //closes database helper
     }
 
     public String GetStopName(String route, int whichRow){
-        BusDB entry = new BusDB(getApplicationContext(), route);
-        entry.open();
+        BusDB entry = new BusDB(getApplicationContext(), route); // creates new database object
+        entry.open(); // creates database unless it already exists
         String stopName = entry.getStop((long)whichRow); // returns stop name for given row
-        entry.close();
+        entry.close(); //closes database helper
         return stopName;
     }
 
     public double[] GetStopCoords(String route, int whichRow){
-        BusDB entry = new BusDB(getApplicationContext(), route);
-        entry.open();
+        BusDB entry = new BusDB(getApplicationContext(), route);// creates new database object
+        entry.open(); // creates database unless it already exists
         double[] coords = new double[2];
-        coords[0] = entry.getLat((long) whichRow);
-        coords[1] = entry.getLong((long) whichRow);
-        entry.close();
-        return coords;
+        coords[0] = entry.getLat((long) whichRow); // gets latitude for row past in
+        coords[1] = entry.getLong((long) whichRow); // gets longitude for row past in
+        entry.close(); //closes database helper
+        return coords; // returns [lat],[long]
     }
 
     public int rowCount(String route){
-        BusDB entry = new BusDB(getApplicationContext(), route);
-        entry.open();
+        BusDB entry = new BusDB(getApplicationContext(), route); // creates new database object
+        entry.open();// creates database unless it already exists
         int count = entry.rowCount(route); // returns no. of rows in route table
-        entry.close();
+        entry.close();//closes database helper
         return count;
     }
 
-    public void databaseSetup() { // hard code attributes to db
+    public void databaseSetup() { // hard code routes/stops and attributes to database
+        /*
+        Various Routes and stops for testing purposes
+
         String route = "Maynooth_Campus";
         String stop = "Eolas";
         double lat = 53.384594;
@@ -183,7 +188,7 @@ public class LocationChoice extends AppCompatActivity  {
 
         Insert(route, stop, lat, lng);
 
-        route = "Maynooth_Campus";
+
         stop = "Library";
         lat = 53.381249;
         lng = -6.600168;
@@ -230,13 +235,17 @@ public class LocationChoice extends AppCompatActivity  {
         lng = -6.133353;
 
         Insert(route, stop, lat, lng);
+        */
 
-        route = "Dublin_Bus_67";
-        stop = "Maynooth (67A Terminus)";
-        lat = 53.379631;
-        lng = -6.589113;
+        String route = "Dublin_Bus_67";
+        String stop = "Maynooth (67A Terminus)";
+        double lat = 53.379631;
+        double lng = -6.589113;
 
         Insert(route, stop, lat, lng);
+        /* creates database 'Dublin_Bus_67' if it does not already exist, with table name 'Dublin_Bus_67'
+        *   stop name 'Maynooth (67A Terminus)' and latitude and longitude values
+        */
 
         stop = "Straffan Rd";
         lat = 53.376533;
@@ -409,7 +418,7 @@ public class LocationChoice extends AppCompatActivity  {
 
         Insert(route, stop, lat, lng);
 
-    }
+    } // this method is only called on first install of app and populates database
 
     // Setting the menu in the toolbar to have the appropriate values.
 
