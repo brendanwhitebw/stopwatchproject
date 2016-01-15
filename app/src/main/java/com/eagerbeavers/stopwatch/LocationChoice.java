@@ -68,7 +68,7 @@ public class LocationChoice extends AppCompatActivity  {
 
         for(int i = 0; i < routeL.length; i += 2) {
         // new array to filter out every second database name that is returned by databaselist
-            RouteArray.add(routeL[i]); // add database name to array
+            RouteArray.add(routeL[i].replace('_', ' ')); // add database name to array
         }
 
 
@@ -79,6 +79,7 @@ public class LocationChoice extends AppCompatActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View vies, int position, long id) {
                 item = (String) parent.getItemAtPosition(position); // when item in route list is clicked set item to route/database name
+                item = item.replace(" ", "_"); // database has to have underscore in database name
                 StopArray.clear(); // clear stop array list
                 int rowNum = rowCount(item); // get number of rows in route table
 
@@ -120,7 +121,7 @@ public class LocationChoice extends AppCompatActivity  {
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
         RouteArray.clear(); // clears route list
         for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
-            RouteArray.add(routeL[i]); // populates route array
+            RouteArray.add(routeL[i].replace('_', ' ')); // populates route array and replaces underscore with space
         }
 
         ArrayAdapter<String>  routeAdapter = new ArrayAdapter<String>(this, R.layout.customlocationlistview, android.R.id.text1,RouteArray);
@@ -415,6 +416,189 @@ public class LocationChoice extends AppCompatActivity  {
         stop = "Liffey Valley";
         lat = 53.357762;
         lng = -6.405201;
+
+        Insert(route, stop, lat, lng);
+
+        route = "Irish_rail_Dublin_Cork";
+        stop = "Heuston";
+        lat = 53.346363;
+        lng =  -6.294125;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Park West and Cherry Orchard";
+        lat = 53.333992;
+        lng =  -6.378706;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Clondalkin";
+        lat = 53.332960;
+        lng =  -6.396376;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Adamstown";
+        lat = 53.336045;
+        lng =  -6.469478;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cellbridge and Hazelhatch";
+        lat = 53.322429;
+        lng = -6.523309;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Sallins and Naas";
+        lat = 53.246816;
+        lng = -6.664614;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Newbridge";
+        lat = 53.185637;
+        lng =  -6.808215;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Kildare";
+        lat = 53.163101;
+        lng =  -6.907886;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Monasterevin";
+        lat = 53.145352;
+        lng =   -7.063964;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Portarlington";
+        lat = 53.145928;
+        lng =  -7.180565;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Portlaoise";
+        lat = 53.037095;
+        lng = -7.301114;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Templemore";
+        lat = 52.787845;
+        lng = -7.822458;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Thurles";
+        lat = 52.676793;
+        lng = -7.821825;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Limerick junction";
+        lat = 52.501219;
+        lng = -8.199894;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Charleville";
+        lat = 52.347434;
+        lng = -8.653363;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Mallow";
+        lat = 52.138939;
+        lng =  -8.655080;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cork Kent";
+        lat = 51.901870;
+        lng =  -8.457938;
+
+        Insert(route, stop, lat, lng);
+
+        route = "Bus_Eireann_126";
+        stop = "Dublin DCU";
+        lat = 53.387059;
+        lng =   -6.257003;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Dublin, Belfield";
+        lat = 53.296167;
+        lng =   -6.256304;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Dublin, Kildare street";
+        lat = 53.340191;
+        lng =   -6.255608;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Dublin Busáras";
+        lat = 53.349825;
+        lng = -6.251936;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Castlewarden";
+        lat = 53.255866;
+        lng = -6.554220;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Kill";
+        lat = 53.248188;
+        lng = -6.591907;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Johnstown Village";
+        lat = 53.235613;
+        lng = -6.625992;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Naas";
+        lat = 53.217659;
+        lng = -6.663827;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Newbridge";
+        lat = 53.180724;
+        lng = -6.797518;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Milltown";
+        lat = 53.204931;
+        lng =  -6.860660;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Rathangan";
+        lat = 53.220760;
+        lng = -6.993253;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Brownstown";
+        lat = 53.139124;
+        lng = -6.839529;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Kildare";
+        lat = 53.157286;
+        lng = -6.910556;
 
         Insert(route, stop, lat, lng);
 
