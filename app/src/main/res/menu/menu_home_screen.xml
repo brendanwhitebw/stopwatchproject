@@ -4,8 +4,5 @@
 
     <item android:id="@+id/toolbar_settings"
         android:title="Settings" />
-    <item android:id="@+id/toolbar_alarms"
-        android:title="Custom Alarms"
-         />
 
 </menu>

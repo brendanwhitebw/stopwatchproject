@@ -125,6 +125,11 @@ public class LocationChoice extends AppCompatActivity  {
         RouteListView.setAdapter(routeAdapter); // populate route list
     }
 
+    /* We can move CustomInput to the toolbar to match the button on the Homescreen, and settings
+     * can be accessed from settings bar.
+     * These methods, and the entire bottom bar should be deleted, because they are unneccesary.
+     */
+
     public void Custom(View view) // button listener
     {
         Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
@@ -405,12 +410,17 @@ public class LocationChoice extends AppCompatActivity  {
         Insert(route, stop, lat, lng);
 
     }
+
+    // Setting the menu in the toolbar to have the appropriate values.
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home_screen, menu);
         return true;
     }
+
+    // Allowing selection from the menu.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -420,26 +430,12 @@ public class LocationChoice extends AppCompatActivity  {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
+        if (id == R.id.toolbar_settings) {
+            Intent intentSettings = new Intent(LocationChoice.this, SettingsActivity.class);
+            startActivity(intentSettings);
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-    //Go to Map activity method
-   /* public void gotToMap(View view)
-    {
-        Intent intentMap = new Intent(LocationChoice.this, HomeScreen.class);
-        startActivity(intentMap);
-    }
-
-    //Go to Alarms activity method
-    public void goToAlarms(View view)
-    {
-        Intent intentAlarms = new Intent(LocationChoice.this, LocationChoice.class);
-        startActivity(intentAlarms);
-    }*/
 }

@@ -609,11 +609,7 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
             Intent intentSettings = new Intent(HomeScreen.this, SettingsActivity.class);
             startActivity(intentSettings);
             return true;
-        } /* else if (id == R.id.toolbar_alarms) {
-            Intent intentAlarms = new Intent(HomeScreen.this, AlarmsActivity.class);
-            startActivity(intentAlarms);
-            return true;
-        }*/ //Allans's custom section
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -8,6 +8,8 @@
     tools:context="com.eoin.mymedialistapplication.SoundChoice"
     tools:showIn="@layout/activity_sound_choice">
 
+    <!-- This Layout uses nested list views inside linear layout columns to display our two lists. -->
+
     <LinearLayout android:layout_height="fill_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -21,6 +23,8 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_weight="9"
             android:background="#ffe8cc">
+
+            <!-- Column headers as TextViews. -->
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -47,6 +51,8 @@
                     android:layout_marginTop="15dp"
                     android:textSize="20sp" />
             </LinearLayout>
+
+            <!-- The core list views. -->
 
             <LinearLayout
                 android:orientation="horizontal"
