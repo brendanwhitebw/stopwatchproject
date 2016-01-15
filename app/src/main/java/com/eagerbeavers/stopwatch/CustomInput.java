@@ -51,53 +51,58 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         FindButton = (Button)findViewById(R.id.findButton);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
-
+        Toast toast = Toast.makeText(getApplicationContext(), "Press and hold location on map to add marker", Toast.LENGTH_LONG);
+        toast.show();
     }
 
 
 
-    public void AddButton(View view) // button listener
+    public void AddButton(View view) // save button listener
     {
         if(!RouteText.getText().toString().equals("") && RouteText.getText().toString() != null && lat != null)
-        {
+        { // if text field is not empty and latitude is not null
 
             String route = RouteText.getText().toString();
-            String stop = StopText.getText().toString();
+            String stop = StopText.getText().toString(); // set strings to text in text fields
 
-            route = route.replace(' ', '_');
+            route = route.replace(' ', '_'); // replace any spaces with underscore as table name cant have spaces
 
-            BusDB entry = new BusDB(getApplicationContext(), route);
-            entry.open();
-            entry.createEntry(stop, lat, lng); // create new entry in db
-            entry.close();
-            AddStop.setEnabled(false);
+            BusDB entry = new BusDB(getApplicationContext(), route); // creates new database object
+            entry.open(); // creates database unless it already exists
+            entry.createEntry(stop, lat, lng); // create new entry in database with these values
+            entry.close(); //closes database helper
+            AddStop.setEnabled(false); // disable save button
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name", Toast.LENGTH_SHORT);
-            toast.show();
+            toast.show(); // else show error message
         }
     }
 
-    public void FindButton(View view) // button listener
+    public void FindButton(View view) // find button listener
     {
         String location = StopText.getText().toString();
-        mMap.clear();
+        mMap.clear(); // clear markers
         List<Address> addressList = null;  // create address list
         if(location != null && !location.equals("")) // if location text field is not empty
         {
-            Locale locale = new Locale("IE");
-            Geocoder geocoder = new Geocoder(this, locale); // create geocoder object which converts text addresses to latitude and longitude co-ordinates
+            Locale locale = new Locale("IE"); // locale set to ireland
+            Geocoder geocoder = new Geocoder(this, locale);
+            // create geocoder object which converts text addresses to latitude and longitude co-ordinates
             try {
-                addressList = geocoder.getFromLocationName(location, 10, 51.416527, -10.598744, 55.438535, -5.391225);  // returns up to 10 addresses thats are known to discribe the named location within specifed box
+                addressList = geocoder.getFromLocationName(location, 10, 51.416527, -10.598744, 55.438535, -5.391225);
+                /* returns up to 10 addresses thats are known to discribe the named location within specifed co-ordinates (UK and Ireland)
+                * this is so there are no unnessary results returned for the address in far away countries
+                * */
             }
-            catch (IOException e)
+            catch (IOException e) // catch if exception is thrown
             {
                 e.printStackTrace();
             }
 
             if (addressList.size() > 0 ) {
 
-                AddStop.setEnabled(true);
+                AddStop.setEnabled(true); // enable save button
                 Address address = addressList.get(0);
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
@@ -130,47 +135,48 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setMyLocationEnabled(true);
+        mMap.setMyLocationEnabled(true); // allows map to center on location
         LocationManager mng = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        //Criteria cri= new Criteria();
-        //String x = mng.getBestProvider(cri, true);
         Location myLocation = mMap.getMyLocation(); // initiates myLocation
         try {
-            myLocation = mng.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); // stores current location in myLocation, has to be handled by exception
+            myLocation = mng.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            // stores current location in myLocation, has to be handled by exception
         }
         catch(SecurityException e)
         {
             e.printStackTrace();
         }
 
-        final LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude()); // gets co-ordinates of current location
+        final LatLng latLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+        // gets co-ordinates of current location
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20)); // moves camera to current location on start up
 
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() { //place marker on map
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() { // listener for long map click
             @Override
-            public void onMapLongClick(LatLng latLng) {
+            public void onMapLongClick(LatLng latLng) { //place marker on map where user clicks
                 myMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Custom location")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); // add red marker to map
                 lat = myMarker.getPosition().latitude;
-                lng = myMarker.getPosition().longitude;
+                lng = myMarker.getPosition().longitude; // gets latitude and longitude of marker
                 StopText.getText().clear();
-                RouteText.getText().clear();
+                RouteText.getText().clear(); // clears stop and route text so user can enter new names for selected marker
                 Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name for new marker", Toast.LENGTH_SHORT);
                 toast.show();
-                AddStop.setEnabled(true);
+                AddStop.setEnabled(true); // save button enabled
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() { // marker click listener
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        // marker click listener for when several markers are returned when user enters address
             @Override
             public boolean onMarkerClick(Marker myMarker) {
                 lat = myMarker.getPosition().latitude;
-                lng = myMarker.getPosition().longitude;
+                lng = myMarker.getPosition().longitude; // get lat and long of marker selected ready to add to database
                 Toast toast = Toast.makeText(getApplicationContext(), "Marker selected", Toast.LENGTH_SHORT);
                 toast.show();
-                AddStop.setEnabled(true);
+                AddStop.setEnabled(true); // save button enabled
                 return true;
             }
         });
