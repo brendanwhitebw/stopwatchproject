@@ -191,7 +191,7 @@ public class SoundChoice extends AppCompatActivity {
                             editor.putString("CurrentAlarmTrackName", song);
                             editor.apply();
 
-                            Toast.makeText(getApplicationContext(), alarmName + " is set to " + song, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Alarm sound is set to " + song, Toast.LENGTH_LONG).show();
                         } else {
                             Log.e("stopwatch", "Not sent here with alarm name...");
                         }

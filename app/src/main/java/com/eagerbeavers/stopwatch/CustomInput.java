@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_input);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cInputToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -55,7 +56,10 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         FindButton = (Button)findViewById(R.id.findButton);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
-        Toast toast = Toast.makeText(getApplicationContext(), "Press and hold location on map to add marker", Toast.LENGTH_LONG);
+
+        int offY = 425;
+        Toast toast = Toast.makeText(getApplicationContext(), "Press and hold a location on the map to select it!", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
         toast.show();
     }
 

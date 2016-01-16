@@ -39,7 +39,7 @@ public class LocationChoice extends AppCompatActivity  {
         setContentView(R.layout.location_choice);
 
         // Toolbar and back button setup.
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.lChoiceToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -48,8 +48,6 @@ public class LocationChoice extends AppCompatActivity  {
          */
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.getBoolean("firstTime", false)) {
-            Toast.makeText(this, "First!", Toast.LENGTH_LONG).show();
-
             databaseSetup();// fills database on first install of app
 
             SharedPreferences.Editor editor = prefs.edit();
