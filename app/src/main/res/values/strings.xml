@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">StopWATCH</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_location_choice">Home</string>
+    <string name="title_activity_location_choice">MAP</string>
     <string name="title_activity_map">Map</string>
-    <string name="title_activity_custom_input">Home</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_custom_input">MAP</string>
+    <string name="title_activity_settings">MAP</string>
 
 
     <!-- Allan's UI strings -->
@@ -22,7 +22,7 @@
     <string name="title_activity_alarms">AlarmsActivity</string>
 
     <string name="AlarmSoundSettings">ALARM</string>
-    <string name="title_activity_sound_choice">SOUNDCHOICE</string>
+    <string name="title_activity_sound_choice">MAP</string>
     <string name="currentAlarmSound">TRACK</string>
 
 
