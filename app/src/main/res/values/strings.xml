@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">StopWATCH</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_location_choice">Back to map</string>
+    <string name="title_activity_location_choice">Home</string>
     <string name="title_activity_map">Map</string>
-    <string name="title_activity_custom_input">Map</string>
+    <string name="title_activity_custom_input">Home</string>
     <string name="title_activity_settings">Settings</string>
 
 

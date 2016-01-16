@@ -44,6 +44,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
         </activity>
+
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -67,11 +69,7 @@
             android:name="io.fabric.ApiKey"
             android:value="896a41c1c4d47780ecb869a4e9c725a4d693b6b2" />
 
-        <activity
-            android:name=".CustomInput"
-            android:label="@string/title_activity_custom_input"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -82,6 +80,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="HomeScreen" />
         </activity>
+
+        <activity
+            android:name=".CustomInput"
+            android:label="@string/title_activity_custom_input"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".HomeScreen"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="HomeScreen" />
+        </activity>
+
+
         <activity android:name=".SplashScreen"
             android:screenOrientation="portrait">
 
@@ -104,11 +115,11 @@
         <activity
             android:name=".SoundChoice"
             android:label="@string/title_activity_sound_choice"
-            android:parentActivityName=".SettingsActivity"
+            android:parentActivityName=".HomeScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="SettingsActivity" />
+                android:value="HomeScreen" />
         </activity>
     </application>
 

@@ -15,6 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:textColor="#000"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -26,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="@string/locationBtn"
+                android:textColor="#000"
+                android:background="@drawable/curved_button_pattern"
                 android:onClick="goToLocationChoice"
                 />
 

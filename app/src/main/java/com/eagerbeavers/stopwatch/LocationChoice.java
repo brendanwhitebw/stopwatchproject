@@ -25,7 +25,6 @@ public class LocationChoice extends AppCompatActivity  {
     ListView StopListView, RouteListView;
     ArrayList StopArray = new ArrayList();
     ArrayList RouteArray = new ArrayList();
-    Button CustomRoute;
 
     // Initialising here so that it can be passed between button click calls.
     String item;
@@ -62,7 +61,11 @@ public class LocationChoice extends AppCompatActivity  {
 
         StopListView = (ListView) findViewById(R.id.StopListView);
         RouteListView = (ListView) findViewById(R.id.RouteListView);
-        CustomRoute = (Button) findViewById(R.id.CustomRoute);
+
+
+        //CustomRoute = (Button) findViewById(R.id.CustomRoute);
+
+
 
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
 
@@ -138,11 +141,11 @@ public class LocationChoice extends AppCompatActivity  {
         Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
         startActivity(CustomIntent);
     }
-    public void Settingsbutton(View view)
+    /*public void Settingsbutton(View view)
     {
         Intent intent = new Intent(LocationChoice.this, SettingsActivity.class);
         startActivity(intent);
-    }
+    }*/
 
 
     public void Insert(String route, String stop, double lat, double lng){
