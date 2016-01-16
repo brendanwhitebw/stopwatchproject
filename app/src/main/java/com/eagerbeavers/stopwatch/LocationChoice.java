@@ -603,6 +603,117 @@ public class LocationChoice extends AppCompatActivity  {
 
         Insert(route, stop, lat, lng);
 
+        route = "Luas_Green_Line";
+        stop = "St.Stephens Green";
+        lat = 53.339059;
+        lng =  -6.261247;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Harcourt";
+        lat = 53.333678;
+        lng =  -6.262706;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Charlemont";
+        lat = 53.330603;
+        lng =  -6.258618;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Beechwood";
+        lat = 53.320888;
+        lng =  -6.254605;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Cowper";
+        lat = 53.316370;
+        lng =   -6.253393;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Windy Arbour";
+        lat = 53.301716;
+        lng =  -6.250668;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Dundrum";
+        lat = 53.292425;
+        lng =  -6.245153;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Balally";
+        lat = 53.286050;
+        lng =  -6.236752;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Kilmacud";
+        lat = 53.282971;
+        lng =  -6.224146;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Stillorgan";
+        lat = 53.279327;
+        lng =  -6.210274;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Sandyford";
+        lat = 53.277627;
+        lng =  -6.204588;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Central Park";
+        lat = 53.270157;
+        lng =   -6.203827;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "The Gallops";
+        lat = 53.261162;
+        lng =  -6.205814;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Lepardstown Valley";
+        lat = 53.258300;
+        lng =  -6.198357;
+
+        Insert(route, stop, lat, lng);
+
+
+        stop = "Carrickmines";
+        lat = 53.254346;
+        lng =   -6.171567;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Laughanstown";
+        lat = 53.250623;
+        lng =  -6.154969;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Cherrywood";
+        lat = 53.245394;
+        lng =  -6.145797;
+
+        Insert(route, stop, lat, lng);
+
+        stop = "Brides Glen";
+        lat = 53.241895;
+        lng =  -6.142761;
+
+        Insert(route, stop, lat, lng);
     } // this method is only called on first install of app and populates database
 
     // Setting the menu in the toolbar to have the appropriate values.
