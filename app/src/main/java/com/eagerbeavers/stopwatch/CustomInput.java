@@ -40,6 +40,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     Double lat, lng;
     Marker myMarker;
+    int offY = 425;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +58,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
         mapFragment.getMapAsync(this);
 
-        int offY = 425;
-        Toast toast = Toast.makeText(getApplicationContext(), "Press and hold a location on the map to select it!", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getApplicationContext(), "Press and hold a location on the map or enter an address", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
         toast.show();
     }
@@ -80,6 +80,9 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
             entry.createEntry(stop, lat, lng); // create new entry in database with these values
             entry.close(); //closes database helper
             AddStop.setEnabled(false); // disable save button
+            Toast toast = Toast.makeText(getApplicationContext(), "route/stop added to database", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+            toast.show();
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name", Toast.LENGTH_SHORT);
@@ -98,7 +101,9 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
             Geocoder geocoder = new Geocoder(this, locale);
             // create geocoder object which converts text addresses to latitude and longitude co-ordinates
             try {
+
                 addressList = geocoder.getFromLocationName(location, 10, 51.416527, -10.598744, 55.438535, -5.391225);
+
                 /* returns up to 10 addresses thats are known to discribe the named location within specifed co-ordinates (UK and Ireland)
                 * this is so there are no unnessary results returned for the address in far away countries
                 * */
@@ -108,17 +113,18 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 e.printStackTrace();
             }
 
-            if (addressList.size() > 0 ) {
+            if (addressList.size() > 0 ) {// if geofence returns 1 or more results
 
                 AddStop.setEnabled(true); // enable save button
                 Address address = addressList.get(0);
                 LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-                for(int i = 0; i< addressList.size(); i++) {
+                for(int i = 0; i< addressList.size(); i++) { // loop for each geocoder address found
                     address = addressList.get(i); // address class stores latitude and longitude
                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(latLng).title("Marker")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))); //adds marker to inputed address
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                            //adds marker for each address
                 }
                 lat = address.getLatitude();
                 lng = address.getLongitude();
@@ -174,6 +180,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 StopText.getText().clear();
                 RouteText.getText().clear(); // clears stop and route text so user can enter new names for selected marker
                 Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name for new marker", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
                 toast.show();
                 AddStop.setEnabled(true); // save button enabled
             }
@@ -183,10 +190,11 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         // marker click listener for when several markers are returned when user enters address
             @Override
             public boolean onMarkerClick(Marker myMarker) {
-                myMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                myMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)); // sets marker blue(azure) colour
                 lat = myMarker.getPosition().latitude;
                 lng = myMarker.getPosition().longitude; // get lat and long of marker selected ready to add to database
                 Toast toast = Toast.makeText(getApplicationContext(), "Marker selected", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
                 toast.show();
                 AddStop.setEnabled(true); // save button enabled
                 return true;
