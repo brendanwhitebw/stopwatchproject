@@ -117,7 +117,8 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 for(int i = 0; i< addressList.size(); i++) {
                     address = addressList.get(i); // address class stores latitude and longitude
                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Marker")); //adds marker to inputed address
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Marker")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))); //adds marker to inputed address
                 }
                 lat = address.getLatitude();
                 lng = address.getLongitude();
@@ -165,8 +166,9 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() { // listener for long map click
             @Override
             public void onMapLongClick(LatLng latLng) { //place marker on map where user clicks
+                mMap.clear(); // clear markers
                 myMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Custom location")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))); // add red marker to map
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))); // add marker to map
                 lat = myMarker.getPosition().latitude;
                 lng = myMarker.getPosition().longitude; // gets latitude and longitude of marker
                 StopText.getText().clear();
@@ -181,6 +183,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         // marker click listener for when several markers are returned when user enters address
             @Override
             public boolean onMarkerClick(Marker myMarker) {
+                myMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                 lat = myMarker.getPosition().latitude;
                 lng = myMarker.getPosition().longitude; // get lat and long of marker selected ready to add to database
                 Toast toast = Toast.makeText(getApplicationContext(), "Marker selected", Toast.LENGTH_SHORT);

@@ -34,7 +34,7 @@ public class BusDB {
                             KEY_Lat + " REAL NOT NULL, " +
                             KEY_Long + " REAL NOT NULL);"
             );
-        } /* Create table statement for bus routes database, contains the stop name, latitude/longitude and
+        }/* Create table statement for bus routes database, contains the stop name, latitude/longitude and
            * a primary key that increments with each stop loaction added to the table.
            * For each route entered by the user a new database is created with a table with the same name
            */
@@ -68,8 +68,8 @@ public class BusDB {
         cv.put(KEY_Stop, stop);
         cv.put(KEY_Lat, lat);
         cv.put(KEY_Long, lng); // inserts stop name, latitude and longitude into content values
-        return ourDatabase.insert(RouteN, null, cv); // creates new row with data passed into content values in RouteN table
-
+        return ourDatabase.insert(RouteN, null, cv);
+        // creates new row with data passed into content values in RouteN table
     }
 
     public int rowCount(String route) {

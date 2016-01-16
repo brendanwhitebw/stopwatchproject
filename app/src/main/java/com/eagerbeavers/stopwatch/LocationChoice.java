@@ -245,6 +245,7 @@ public class LocationChoice extends AppCompatActivity  {
         double lng = -6.589113;
 
         Insert(route, stop, lat, lng);
+
         /* creates database 'Dublin_Bus_67' if it does not already exist, with table name 'Dublin_Bus_67'
         *   stop name 'Maynooth (67A Terminus)' and latitude and longitude values
         */
