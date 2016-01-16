@@ -18,7 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/background"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="#000"
+            android:text="Custom Input"
+            android:background="@drawable/curved_button_pattern"
+            android:onClick="Custom"
+            />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
