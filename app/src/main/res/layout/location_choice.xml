@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/lChoiceToolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/background"
@@ -28,6 +28,7 @@
             android:text="Custom Input"
             android:background="@drawable/curved_button_pattern"
             android:onClick="Custom"
+            android:layout_marginRight="10dp"
             />
 
         </android.support.v7.widget.Toolbar>

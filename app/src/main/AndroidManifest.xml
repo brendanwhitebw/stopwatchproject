@@ -85,13 +85,12 @@
             android:name=".CustomInput"
             android:label="@string/title_activity_custom_input"
             android:screenOrientation="portrait"
-            android:parentActivityName=".HomeScreen"
+            android:parentActivityName=".LocationChoice"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="HomeScreen" />
+                android:value=".LocationChoice" />
         </activity>
-
 
         <activity android:name=".SplashScreen"
             android:screenOrientation="portrait">
@@ -102,24 +101,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AlarmsActivity"
-            android:label="@string/title_activity_alarms"
-            android:parentActivityName=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EditActivity"
-            android:label="EditActivity"
-            android:parentActivityName=".HomeScreen"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".SoundChoice"
             android:label="@string/title_activity_sound_choice"
-            android:parentActivityName=".HomeScreen"
+            android:parentActivityName=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="HomeScreen" />
+                android:value=".SettingsActivity" />
         </activity>
     </application>
 

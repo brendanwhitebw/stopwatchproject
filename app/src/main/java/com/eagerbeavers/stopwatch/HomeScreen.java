@@ -425,7 +425,17 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
         there. */
 
         lastLocation = LocationServices.FusedLocationApi.getLastLocation(aGoogleApiClient);
-        Map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 15));
+
+        /* If there is a destination set by the user however, we start the camera there.
+         * 0, 0 off the coast of Africa is the default location, and is presumed not to be a stop
+         * set by the user.
+         */
+
+        if (Coordinates.get(0).latitude == 0 && Coordinates.get(0).longitude == 0) {
+            Map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 11));
+        } else {
+            Map.animateCamera(CameraUpdateFactory.newLatLngZoom(Coordinates.get(0), 11));
+        }
     }
 
     @Override

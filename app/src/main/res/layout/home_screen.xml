@@ -30,6 +30,7 @@
                 android:textColor="#000"
                 android:background="@drawable/curved_button_pattern"
                 android:onClick="goToLocationChoice"
+                android:layout_marginRight="10dp"
                 />
 
         </android.support.v7.widget.Toolbar>

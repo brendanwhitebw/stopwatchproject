@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">StopWATCH</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_location_choice">MAP</string>
+    <string name="title_activity_location_choice">SET STOP</string>
     <string name="title_activity_map">Map</string>
-    <string name="title_activity_custom_input">MAP</string>
-    <string name="title_activity_settings">MAP</string>
+    <string name="title_activity_custom_input">FIND CUSTOM STOP</string>
+    <string name="title_activity_settings">SETTINGS</string>
 
 
     <!-- Allan's UI strings -->
@@ -15,14 +15,14 @@
     <string name="stringSettings">Settings</string>
 
     <string name="distanceMeasureBtn">How Far?</string>
-    <string name="locationBtn">Set Stop</string>
+    <string name="locationBtn">SET STOP</string>
 
     <string name="title_activity_custom_input2">CustomInput2</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_alarms">AlarmsActivity</string>
 
     <string name="AlarmSoundSettings">ALARM</string>
-    <string name="title_activity_sound_choice">MAP</string>
+    <string name="title_activity_sound_choice">CHOOSE ALARM SOUND</string>
     <string name="currentAlarmSound">TRACK</string>
 
 

@@ -45,7 +45,7 @@ public class AlarmFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_alarm, container, false);
-        getDialog().setTitle("Arrived!");
+        getDialog().setTitle("YOU HAVE ARRIVED!");
 
 
         /* Access the power service, wake up the phone, and keep it awake until the wakelock is
