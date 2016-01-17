@@ -79,7 +79,8 @@ public class LocationChoice extends AppCompatActivity  {
         RouteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View vies, int position, long id) {
-                item = (String) parent.getItemAtPosition(position); // when item in route list is clicked set item to route/database name
+                item = (String) parent.getItemAtPosition(position);
+                // when item in route list is clicked set item to route/database name
                 item = item.replace(" ", "_"); // database has to have underscore in database name
                 StopArray.clear(); // clear stop array list
                 int rowNum = rowCount(item); // get number of rows in route table
@@ -93,7 +94,8 @@ public class LocationChoice extends AppCompatActivity  {
                     stopLong[i - 1] = GetStopCoords(item, i)[1]; // returns co-ordinates for route clicked
                 }
 
-                ArrayAdapter<String> stopAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customlocationlistview, android.R.id.text1 , StopArray);
+                ArrayAdapter<String> stopAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                        R.layout.customlocationlistview, android.R.id.text1 , StopArray);
                 StopListView.setAdapter(stopAdapter); // populate stop list
 
                 StopListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,7 +123,8 @@ public class LocationChoice extends AppCompatActivity  {
         super.onResume();
         String[] routeL = getApplicationContext().databaseList(); // get names of all databases of app
         RouteArray.clear(); // clears route list
-        for(int i = 0; i < routeL.length; i += 2) { // new array to filter out second database name that is returned by databaselist
+        for(int i = 0; i < routeL.length; i += 2) {
+        // new array to filter out second database name that is returned by databaselist
             RouteArray.add(routeL[i].replace('_', ' ')); // populates route array and replaces underscore with space
         }
 
@@ -139,11 +142,6 @@ public class LocationChoice extends AppCompatActivity  {
         Intent CustomIntent = new Intent(getApplicationContext(), CustomInput.class);
         startActivity(CustomIntent);
     }
-    /*public void Settingsbutton(View view)
-    {
-        Intent intent = new Intent(LocationChoice.this, SettingsActivity.class);
-        startActivity(intent);
-    }*/
 
 
     public void Insert(String route, String stop, double lat, double lng){
@@ -180,64 +178,6 @@ public class LocationChoice extends AppCompatActivity  {
     }
 
     public void databaseSetup() { // hard code routes/stops and attributes to database
-        /*
-        Various Routes and stops for testing purposes
-
-        String route = "Maynooth_Campus";
-        String stop = "Eolas";
-        double lat = 53.384594;
-        double lng = -6.601688;
-
-        Insert(route, stop, lat, lng);
-
-
-        stop = "Library";
-        lat = 53.381249;
-        lng = -6.600168;
-
-        Insert(route, stop, lat, lng);
-
-        stop = "Callan";
-        lat = 53.382900;
-        lng = -6.602038;
-
-        Insert(route, stop, lat, lng);
-
-        route = "Kildare";
-        stop = "Naas, East";
-        lat = 53.214048;
-        lng = -6.663412;
-
-        Insert(route, stop, lat, lng);
-
-        route = "Kildare";
-        stop = "Newbridge, Maxol";
-        lat = 53.167480;
-        lng = -6.816529;
-
-
-
-        Insert(route, stop, lat, lng);
-
-        stop = "Clane, Esso";
-        lat =53.2933;
-        lng = -6.6864;
-
-        Insert(route, stop, lat, lng);
-
-        stop = "Clane, Loughbollard";
-        lat =53.29925;
-        lng = -6.68978;
-
-        Insert(route, stop, lat, lng);
-
-        route = "Bray";
-        stop = "Ferndale Rd.";
-        lat = 53.209249;
-        lng = -6.133353;
-
-        Insert(route, stop, lat, lng);
-        */
 
         String route = "Dublin_Bus_67";
         String stop = "Maynooth (67A Terminus)";

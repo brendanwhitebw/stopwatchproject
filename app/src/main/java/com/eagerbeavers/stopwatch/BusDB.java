@@ -134,19 +134,6 @@ public class BusDB {
         return 0; // return zero if row not found
     }
 
-    /*public void updateEntry(long lRow, String mStop, double mlat, double mlong) throws SQLException{
-        ContentValues cvUpdate = new ContentValues();
-        cvUpdate.put(KEY_Stop, mStop);
-        cvUpdate.put(KEY_Lat, mlat);
-        cvUpdate.put(KEY_Long, mlong);
-        ourDatabase.update(RouteN, cvUpdate, KEY_ROWID + "=" + lRow, null);
-    }
-
-    public void deleteEntry(long lRow1) throws SQLException{
-        ourDatabase.delete(RouteN, KEY_ROWID + "=" + lRow1, null);
-    }
-    Does not use these methods
-    */
 }
 
 
