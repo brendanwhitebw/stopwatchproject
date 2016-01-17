@@ -3,19 +3,19 @@
     <item android:state_pressed="true" >
         <shape>
             <gradient
-                android:startColor="#ffcd48"
-                android:endColor="#ffb833"
-                android:angle="270" />
+                android:startColor="#ffe8cc"
+                android:endColor="#fabe18"
+                android:angle="180" />     <!-- Specifies a gradient color, start, end colors and angle for gradient -->
             <stroke
-                android:width="2dp"
-                android:color="#dcdcdc" />
+                android:width="1dp"
+                android:color="#dcdcdc" /> <!-- borderline witdh and colour -->
             <corners
-                android:radius="5dp" />
+                android:radius="5dp" />  <!-- Creates rounded corners for the rectangle -->
             <padding
                 android:left="10dp"
                 android:top="10dp"
                 android:right="10dp"
-                android:bottom="10dp"/>
+                android:bottom="10dp"/> <!-- padding for text -->
         </shape>
     </item>
 
@@ -25,11 +25,11 @@
     <item android:state_focused="true">
         <shape>
             <gradient
-                android:startColor="#ffcd48"
-                android:endColor="#ffb833"
-                android:angle="270" />
+                android:startColor="#ffcf00"
+                android:endColor="#ffcf00"
+                android:angle="180" />
             <stroke
-                android:width="2dp"
+                android:width="1dp"
                 android:color="#dcdcdc" />
             <corners
                 android:radius="2dp" />
@@ -46,11 +46,11 @@
     <item>
         <shape>
             <gradient
-                android:startColor="#ffcd48"
-                android:endColor="#ffb833"
+                android:startColor="#fabe18"
+                android:endColor="#ffcf00"
                 android:angle="90" />
             <stroke
-                android:width="2dp"
+                android:width="1dp"
                 android:color="#dcdcdc" />
             <corners
                 android:radius="5dp" />

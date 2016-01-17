@@ -49,17 +49,17 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.cInputToolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // set up toolbar
 
         RouteText = (EditText)findViewById(R.id.RouteText);
         StopText = (EditText)findViewById(R.id.StopText);
         AddStop = (Button)findViewById(R.id.AddStop);
-        FindButton = (Button)findViewById(R.id.findButton);
+        FindButton = (Button)findViewById(R.id.findButton);  // link objects to layout widgets
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this); // set up map
 
         Toast toast = Toast.makeText(getApplicationContext(), "Press and hold a location on the map or enter an address", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY); // sets toast message to centre of screen
         toast.show();
     }
 
@@ -190,7 +190,8 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         // marker click listener for when several markers are returned when user enters address
             @Override
             public boolean onMarkerClick(Marker myMarker) {
-                myMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)); // sets marker blue(azure) colour
+                myMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                // sets marker blue(azure) colour
                 lat = myMarker.getPosition().latitude;
                 lng = myMarker.getPosition().longitude; // get lat and long of marker selected ready to add to database
                 Toast toast = Toast.makeText(getApplicationContext(), "Marker selected", Toast.LENGTH_SHORT);
