@@ -35,7 +35,7 @@ import java.util.Locale;
 
 public class CustomInput extends AppCompatActivity implements OnMapReadyCallback {
 
-    EditText StopText,RouteText;
+    EditText StopText,RouteText,AddressText;
     Button AddStop,FindButton;
     private GoogleMap mMap;
     Double lat, lng;
@@ -51,6 +51,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // set up toolbar
 
+        AddressText = (EditText)findViewById(R.id.addressText);
         RouteText = (EditText)findViewById(R.id.RouteText);
         StopText = (EditText)findViewById(R.id.StopText);
         AddStop = (Button)findViewById(R.id.AddStop);
@@ -92,7 +93,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
 
     public void FindButton(View view) // find button listener
     {
-        String location = StopText.getText().toString();
+        String location = AddressText.getText().toString();
         mMap.clear(); // clear markers
         List<Address> addressList = null;  // create address list
         if(location != null && !location.equals("")) // if location text field is not empty
@@ -141,9 +142,14 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
 
         }
         else{
-            Toast toast = Toast.makeText(getApplicationContext(), "Enter stop name", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Enter Address", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    public void Clear(View view) // button listener
+    {
+        AddressText.setText("");
     }
 
     @Override
