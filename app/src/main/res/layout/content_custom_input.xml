@@ -15,7 +15,7 @@
         android:id="@+id/addressText"
         android:layout_marginTop="48dp"
         android:background="#ffe8cc"
-        android:layout_weight="1.7"
+        android:layout_weight="1.8"
         android:text="Enter address" />
 
     <fragment
@@ -28,13 +28,13 @@
         android:id="@+id/map2"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_gravity="right"
-        android:layout_weight="13.6" />
+        android:layout_weight="13.2" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1.4"
         android:background="@color/background">
 
         <TextView
@@ -65,7 +65,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.7"
+        android:layout_weight="1.8"
         android:background="#ffe8cc">
 
 
@@ -97,7 +97,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1.8"
         android:background="@color/background">
 
         <Button
