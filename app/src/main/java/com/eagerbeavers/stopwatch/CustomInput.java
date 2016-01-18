@@ -35,7 +35,7 @@ import java.util.Locale;
 
 public class CustomInput extends AppCompatActivity implements OnMapReadyCallback {
 
-    EditText StopText,RouteText;
+    EditText StopText,RouteText,AddressText;
     Button AddStop,FindButton;
     private GoogleMap mMap;
     Double lat, lng;
@@ -51,6 +51,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // set up toolbar
 
+        AddressText = (EditText)findViewById(R.id.addressText);
         RouteText = (EditText)findViewById(R.id.RouteText);
         StopText = (EditText)findViewById(R.id.StopText);
         AddStop = (Button)findViewById(R.id.AddStop);
@@ -80,20 +81,19 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
             entry.createEntry(stop, lat, lng); // create new entry in database with these values
             entry.close(); //closes database helper
             AddStop.setEnabled(false); // disable save button
-            Toast toast = Toast.makeText(getApplicationContext(), "Your stop has been added to the database.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "route/stop added to database", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
             toast.show();
         }
         else{
-            Toast toast = Toast.makeText(getApplicationContext(), "Enter route and stop name.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+            Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name", Toast.LENGTH_SHORT);
             toast.show(); // else show error message
         }
     }
 
     public void FindButton(View view) // find button listener
     {
-        String location = StopText.getText().toString();
+        String location = AddressText.getText().toString();
         mMap.clear(); // clear markers
         List<Address> addressList = null;  // create address list
         if(location != null && !location.equals("")) // if location text field is not empty
@@ -130,24 +130,26 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 lat = address.getLatitude();
                 lng = address.getLongitude();
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Select alarm location, or choose a custom location on the map.", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+                Toast toast = Toast.makeText(getApplicationContext(), "Select alarm location, or choose custom location on map", Toast.LENGTH_SHORT);
                 toast.show();
 
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng)); // makes camera focus on marker
             }
             else{
-                Toast toast = Toast.makeText(getApplicationContext(), "No address found.", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+                Toast toast = Toast.makeText(getApplicationContext(), "No address found", Toast.LENGTH_SHORT);
                 toast.show();
             }
 
         }
         else{
-            Toast toast = Toast.makeText(getApplicationContext(), "Enter stop name.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
+            Toast toast = Toast.makeText(getApplicationContext(), "Enter Address", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    public void Clear(View view) // button listener
+    {
+        AddressText.setText("");
     }
 
     @Override
@@ -183,7 +185,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 lng = myMarker.getPosition().longitude; // gets latitude and longitude of marker
                 StopText.getText().clear();
                 RouteText.getText().clear(); // clears stop and route text so user can enter new names for selected marker
-                Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name for this location.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Enter route name and stop name for new marker", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
                 toast.show();
                 AddStop.setEnabled(true); // save button enabled
@@ -198,7 +200,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
                 // sets marker blue(azure) colour
                 lat = myMarker.getPosition().latitude;
                 lng = myMarker.getPosition().longitude; // get lat and long of marker selected ready to add to database
-                Toast toast = Toast.makeText(getApplicationContext(), "Marker selected.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "Marker selected", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
                 toast.show();
                 AddStop.setEnabled(true); // save button enabled

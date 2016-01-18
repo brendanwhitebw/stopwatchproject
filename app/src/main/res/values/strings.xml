@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_location_choice">SET STOP</string>
     <string name="title_activity_map">Map</string>
-    <string name="title_activity_custom_input">FIND CUSTOM STOP</string>
+    <string name="title_activity_custom_input">CUSTOM</string>
     <string name="title_activity_settings">SETTINGS</string>
 
 
