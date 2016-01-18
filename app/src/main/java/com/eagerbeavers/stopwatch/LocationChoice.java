@@ -104,12 +104,16 @@ public class LocationChoice extends AppCompatActivity  {
                         String StopID = (String) parent.getItemAtPosition(position);
                         // when item in stop list is clicked set stopID to stop name
 
-                        Intent geofenceIntent = new Intent(getApplicationContext(), HomeScreen.class); // creates intent to map screen
+                        Intent geofenceIntent = new Intent(getApplicationContext(), HomeScreen.class);
+                        // creates intent to map screen
                         geofenceIntent.putExtra("id", StopID);
 
-                        geofenceIntent.putExtra("lat", GetStopCoords(item, position + 1)[0]); // +1 because the array starts at zero, but the SQL DB starts at 1.
+                        geofenceIntent.putExtra("lat", GetStopCoords(item, position + 1)[0]);
+                        // +1 because the array starts at zero, but the SQL DB starts at 1.
                         geofenceIntent.putExtra("lng", GetStopCoords(item, position + 1)[1]);
                         // passes data with intent to homescreen
+                        geofenceIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        // destroys all previous actvities so the app cannot go into infinate loop by click set stop button on map screen
                         startActivity(geofenceIntent);
                     }
                 });
