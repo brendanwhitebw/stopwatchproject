@@ -16,7 +16,7 @@
         android:layout_marginTop="48dp"
         android:background="#ffe8cc"
         android:layout_weight="1.8"
-        android:text="Enter address" />
+        android:hint="Enter address" />
 
     <fragment
         tools:context=".MapsActivity"
