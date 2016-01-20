@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 /* This activity appears when the user opens the app. It displays a Splash screen, a full screen
  * image of the app's logo for an amount of time, then redirects the user to the main, or HomeScreen,
@@ -52,6 +54,11 @@ public class SplashScreen extends Activity {
          */
 
         timer.start();
+
+        // We tell the user that they must enable gps settings for this app.
+
+        Toast toast = Toast.makeText(SplashScreen.this, "Remember: You must enable your GPS settings to use this app.", Toast.LENGTH_LONG);
+        toast.show();
 
     }
 }
