@@ -126,8 +126,12 @@ public class GeofenceIntentService extends IntentService {
 
         Intent mapIntent = new Intent(getBaseContext(), HomeScreen.class);
         mapIntent.putExtra("Alert", true);
-        mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        getApplication().startActivity(mapIntent);
+        mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        mapIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplication().startActivity(mapIntent); /* Note we call the application .startActivity
+                                                      and need NEW_TASK flag because the service
+                                                      isn't an actvitiy, and can't start activities
+                                                      without extra flags, etc. */
     }
 
     /* This method goes through the list of geofences originally passed to this intent service
