@@ -81,7 +81,7 @@ public class CustomInput extends AppCompatActivity implements OnMapReadyCallback
             entry.createEntry(stop, lat, lng); // create new entry in database with these values
             entry.close(); //closes database helper
             AddStop.setEnabled(false); // disable save button
-            Toast toast = Toast.makeText(getApplicationContext(), "route/stop added to database", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Your Route and Stop have been added to the list.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, offY);
             toast.show();
         }

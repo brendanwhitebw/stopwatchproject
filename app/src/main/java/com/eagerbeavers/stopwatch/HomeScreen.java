@@ -238,6 +238,7 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
                 editor.remove("ID");
                 editor.remove("Lat");
                 editor.remove("Lng");
+                editor.remove("RadiusInUse");
                 editor.apply();
             }
 
@@ -247,6 +248,7 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
             editor.putString("ID", gotHereFrom.getStringExtra("id"));
             editor.putString("Lat", "" + lat);
             editor.putString("Lng", "" + lng);
+            editor.putInt("RadiusInUse", RadDef);
             editor.apply();
 
         } else { // In other words, if the intent did not include new coordinates.
@@ -260,8 +262,10 @@ public class HomeScreen extends AppCompatActivity implements GoogleApiClient.Con
             double lat = Double.parseDouble(prefs.getString("Lat", "0"));
             double lng = Double.parseDouble(prefs.getString("Lng", "0"));
 
+            int rad = prefs.getInt("RadiusInUse", RadDef);
+
             Coordinates.add(new LatLng(lat, lng));
-            RadiusList.add(RadDef);
+            RadiusList.add(rad);
             StopNames.add(prefs.getString("ID", "Place!"));
         }
 
